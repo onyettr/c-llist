@@ -1,0 +1,20 @@
+
+TODO
+====
+TODO Add value paramater to the the list create
+TODO Add delete node / element
+TODO Add sorting function
+TODO Add sbrk() and ensure all allocated memory is put back
+TODO Add previous pointers to make doubly linked
+TODO Add better dump tool e.g. ascii art?
+TODO Create the stack example using the list libary
+TODO poortool.c - make it accept UP, DOWN history commands
+
+DONE LIST
+=========
+TODO Fix splint errors with bool definition in list.c
+TODO Add into git  -> DONE W04
+TODO Add deletion -> DONE W03
+TODO Add poortool  -> DONE WW03
+TODO Create a library for list -> DONE W04
+
