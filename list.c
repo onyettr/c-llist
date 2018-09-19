@@ -1,22 +1,9 @@
-/*
+/**
  *****************************************************************************
  * MODULE: C Programming
  *
- * $Header: $
- * $Archive:$
- * 
- * $Workfile: $
- *
- * $Author: Onyettr $
- *
- * NAME: Richard Onyett 
- * EMAIL: 
- *
- * PURPOSE: Linked list implementation
- * 
- * $Revision:$
- * $History: $
- *
+ * @brief  Linked list implementation
+ * @author ronyett
  ***************************************************************************** 
  */
 
@@ -39,138 +26,157 @@ Prototypes of all functions contained in this file (in order of occurance)
 static bool isEmpty(list_t *pq);
 static node_t *NewNode(int value);
 
-/*
- -- --------------------------------------------------------------
- -- static int isEmpty(stack_t *pStack) - test if list isEmpty
- -- 
- -- Returns "true" or "false"
- -- --------------------------------------------------------------
-*/
+/**
+ * @fn      static int isEmpty(stack_t *pStack) - test if list isEmpty
+ *
+ * @brief   check if list is Empty
+ *
+ * @return  Returns "true" or "false"
+ */
 static bool isEmpty(list_t *p) {
-  return p->pHead == NULL ? true : false;
+   return p->pHead == NULL ? true : false;
 }
 
-/*
- -- --------------------------------------------------------------
- -- list_t *list_create(void) - create a new list type.
- --
- -- Return NULL is failure
- -- --------------------------------------------------------------
-*/
+/**
+ *  @fn    list_t *list_create(void)
+ *
+ *  @brief Create a new list
+ *
+ *  @param 
+ *
+ *  @return NULL is failure
+ */
 list_t *list_create(void) { /*@null@*/
-  list_t *p = (list_t*)NULL;
+   list_t *p = (list_t*)NULL;
   
-  p = (list_t *)malloc(sizeof(list_t)); /* @null */
-  if ( p != NULL) {
-    p->pFront = (node_t *)NULL;
-    p->pTail  = (node_t *)NULL;
-    p->pHead  = (node_t *)NULL;
-    p->NodeCount = 0;
-  }
+   p = (list_t *)malloc(sizeof(list_t)); /* @null */
+   if ( p != NULL) {
+      p->pFront = (node_t *)NULL;
+      p->pTail  = (node_t *)NULL;
+      p->pHead  = (node_t *)NULL;
+      p->NodeCount = 0;
+   }
 
-  return p; 
+   return p; 
 }
 
-/*
- -- --------------------------------------------------------------
- -- \fn static node_t *NewNode(int value) - Create an internal
- --     new node
- --
- -- This is used only by list_add operation and so is private to 
- -- this file. 
- -- --------------------------------------------------------------
-*/
+/**
+ *  @fn     static node_t *NewNode(int value) 
+ *
+ *  @brief  Create an internal new node
+ *
+ *  @param  int value 
+ *
+ *  @return node_t * 
+ * 
+ *  @note   This is used only by list_add operation and so is private to this file. 
+ */
 static node_t *NewNode(int value) {
-  node_t *p = NULL;
+   node_t *p = NULL;
 
-  p = (node_t *)malloc(sizeof(node_t));
-  if ( p != NULL ) {
-    p->value = value;
-    p->pNext = NULL;
-    p->pPrev = NULL;
+   p = (node_t *)malloc(sizeof(node_t));
+   if ( p != NULL ) {
+      p->value = value;
+      p->pNext = NULL;
+      p->pPrev = NULL;
+   }
 
-    return p;
-  }
-
-  return p;
+   return p;
 }
 
-/*!
- -- --------------------------------------------------------------
- -- \fn    void list_add ( list_t *p, int value ) 
- -- \brief This adds a node to the end of the list
- -- \param list_p *p         Pointer to the list
- -- --------------------------------------------------------------
-*/
-void list_add ( list_t *p, int value ) {
-  node_t *pNode = NULL; 
+/**
+ *
+ * @fn        void list_add ( list_t *p, int value ) 
+ *
+ * @brief     This adds a node to the end of the list
+ *
+ * @param[in] list_p *p         Pointer to the list to add to 
+ * @param[in] int value         Value
+ *
+ */
+int list_add ( list_t *p, int value ) {
+   node_t *pNode = NULL; 
 
-  /*
-   * Create a new node, store the value 
-   */
-  pNode = NewNode(value);
-  if ( pNode == NULL ) {
-    printf("list_add: failed to create a new node\n");
+   /*
+    * Create a new node, store the value 
+    */
+   pNode = NewNode(value);
+   if ( pNode == NULL ) {
+      printf("list_add: failed to create a new node\n");
 
-    return;
-  }
+      return -1;
+   }
   
-  if (p->pHead == NULL ) {
-    /*
-     * Add this new node to the list as this is the first entry
-     */
-    p->pHead = pNode;
-    p->pTail = pNode;
-    pNode->pNext = NULL;
-    printf("list_add: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
-  } else {
-    /*
-     * We are not the first, so add to the list
-     */
-    p->pTail->pNext = pNode;  
-    p->pTail = pNode;
-    printf("list_add: node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);    
-  }
+   if (p->pHead == NULL ) {
+       /*
+        * Add this new node to the list as this is the first entry
+        */
+       p->pHead = pNode;
+       p->pTail = pNode;
+       pNode->pNext = NULL;
+#if defined (DEEP_TRACE)       
+       printf("list_add: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+#endif       
+   } else {
+       /*
+        * We are not the first, so add to the list at the end
+        */
+       p->pTail->pNext = pNode;  
+       p->pTail = pNode;
+#if defined (DEEP_TRACE)       
+       printf("list_add: node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+#endif       
+   }
 
-  p->NodeCount += 1;
+   p->NodeCount += 1;
+
+   return 0;
 }
 
-/*!
- -- --------------------------------------------------------------
- -- \fn  void list_add_front ( list_t *p, int value ) 
- -- \brief This adds a node to the front of the list
- -- \param list_p *p         Pointer to the list
- -- --------------------------------------------------------------
-*/
+/**
+ *
+ * @fn        void list_add_front ( list_t *p, int value ) 
+ *
+ * @brief     Adds a node to the front of the list
+ * 
+ * @param[in] list_p *p         Pointer to the list
+ * 
+ * @param[in] int value         Value to add
+ *
+ * @return    none
+ */
 void list_add_front ( list_t *p, int value ) {
-  node_t *pNode = NULL; 
-  node_t *pHold = NULL;
+   node_t *pNode = NULL; 
+   node_t *pHold = NULL;
   
-  /*
-   * Create a new node, store the value 
-   */
-  pNode = NewNode(value);
-  if ( pNode == NULL ) {
-    printf("list_add_front: failed to create a new node\n");
+   /*
+    * Create a new node, store the value 
+    */
+   pNode = NewNode(value);
+   if ( pNode == NULL ) {
+      printf("list_add_front: failed to create a new node\n");
 
-    return;
-  }
+     return;
+   }
 
-  if (p->pHead == NULL ) {
-    /*
-     * Add this new node to the list as this is the first entry
-     */
-    p->pHead = pNode;
-    p->pTail = pNode;
-    pNode->pNext = NULL;
-    printf("list_add_front: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
-  } else {
-    pHold = p->pHead;      /* Save off the head of the list                   */
-    p->pHead = pNode;      /* Move the head of the list to this new element   */
-    pNode->pNext = pHold;  /* Point new element back to initial first element */
-  }
+   if (p->pHead == NULL ) {
+      /*
+       * Add this new node to the list as this is the first entry
+       */
+      p->pHead = pNode;
+      p->pTail = pNode;
+      pNode->pNext = NULL;
 
-  p->NodeCount += 1;
+#if defined (DEEP_TRACE)      
+      printf("list_add_front: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+#endif      
+   } else {
+      pHold = p->pHead;      /* Save off the head of the list                   */
+      p->pHead = pNode;      /* Move the head of the list to this new element   */
+      pNode->pNext = pHold;  /* Point new element back to initial first element */
+   }
+
+   p->NodeCount += 1;
 }
 
 /*!
@@ -198,11 +204,13 @@ void list_delete ( list_t *p ) {
   while ( pNode ) {
     pNext = pNode->pNext;  /* Pick up the next one */
 
+#if defined (DEEP_TRACE)    
     printf("[%p] Next->[%p], Value %5d\n",
 	   (void *)pNode,
 	   (void *)pNode->pNext,
 	   pNode->value);
-
+#endif
+    
     free(pNode);           /* Delete current node  */
     pNode = pNext;         /* Move down the list   */
   }
@@ -239,9 +247,11 @@ node_t *list_search_value(list_t *p, int value) {
   np = p->pHead;        /* get first node */
   while ( np ) {
     if ( np->value == value ) {
-#if defined(DEBUG)      
+
+#if defined(DEEP_TRACE)      
       printf("list_search_value: found!\n");
 #endif
+
       return np;
     }
     np = np->pNext;
@@ -276,16 +286,15 @@ void list_show ( list_t *p ) {
     return;
   }
 
-  printf("************* List ***************\n");
-  printf("Node count [%d]\n", p->NodeCount);
-
+  printf("   Address   \tValue\t   pNext\tNumber of Nodes = %d\n", p->NodeCount);
   n = p->pHead;
   while ( n ) {
-    printf("[%p] Next->[%p], Value %5d\n",
-	   (void *)n,
-	   (void *)n->pNext,
-	   n->value);
-    n = n->pNext;
+     printf("[%p]\t%5d\t[%p]\n",
+  	     (void *)n,
+	     n->value,
+	    (void *)n->pNext);
+
+     n = n->pNext;
   }
 }
 

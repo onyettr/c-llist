@@ -1,46 +1,109 @@
-# Simple makefile
+#*******************************************************************************
+# File name        : makefile
+# File description : C Single Linked list implementation
+# Author           : ronyett
+#*******************************************************************************
+
+SRC_DIR		= 	.
+OBJECT_DIR	= 	$(SRC_DIR)/object
+MAKE_DIR_CMD	= 	mkdir $(OBJECT_DIR)
+
 #
 # 1) If you want gcov coverage enable the PLFAGS option and rebuild all
 # 2)
 #
-CC    =g++
-AR    =ar
-LINK  =g++
-DEBUG =-g
-#PFLAGS=-fprofile-arcs -ftest-coverage
-CFLAGS=-c -Wall -pedantic $(PFLAGS)
-LFLAGS=$(PFLAGS) -static -L.
+CC  		= 	gcc
+LINK  		= 	gcc
+AR		= 	ar
+CHK   		= 	checkmk
+CHECK_FOR_CHK	:= 	$(shell command -v $(CHK) 2> /dev/null)
 
-# -DDEBUG_TRACE	Will turn on deep trace per function
-# -DEXCEPTION	Will use the real exceptions with the 'try' that's in the test harness
+#*******************************************************************************
+# Build options
+#*******************************************************************************
 
-# Code checking
-CODE_CHECK=splint
-CODE_CHECK_ARGS=-showfunc -hints -compdef -nullret +loopexec -mustfreeonly
+# gcov and gprof build options
+COVPFLAGS	= 	-fprofile-arcs -ftest-coverage
+PROFLAGS	= 	-pg
+#PFLAGS		= 	$(COVFLAGS)
 
-OBJS  = main.o trap.o test01.o poortool.o
-LIBS  = liblist.a
+DEBUG 		=	-g
+CFLAGS		=	-c -std=c99 -Wall -pedantic $(PFLAGS)
+#CFLAGS		+=	-DDEEP_TRACE
+LFLAGS		=	$(PFLAGS) -static -L.
 
-all:	list.exe liblist.a splint-it
+#
+# Code checking with splint
+#
+CODE_CHECK       = 	splint
+CODE_CHECK_ARGS	 = 	-showfunc -mustfreefresh -nullpass -nullret -noeffect
+
+#
+# Libs, objs targets
+# liblist library is built from trap handling and the list implementation. 
+#
+OBJS  		     = $(OBJECT_DIR)/main.o 	\
+		       $(OBJECT_DIR)/test01.o	\
+		       $(OBJECT_DIR)/trap.o	\
+		       $(OBJECT_DIR)/poortool.o 
+
+LIBS  		     = liblist.a
+TEST_STACK 	     = list_test.ts
+
+#*******************************************************************************
+# Build targets:
+# all		Creates object directory, builds executable and runs checker
+# lib		Build only the list library, no test harness
+# splint-it	run the Syntax checker
+# clean		Delete object and library files
+#*******************************************************************************
+
+all:	$(OBJECT_DIR) list.exe liblist.a test_harness
 
 # The old order of linking chestnut had me going here! Objs need to be first in the list with library last
 list.exe:	$(OBJS) $(LIBS)
 	$(LINK) $(OBJS) $(LFLAGS) -llist -o list.exe
 
-liblist.a:	list.o
-	$(AR) rcs liblist.a list.o
+liblist.a:	$(OBJECT_DIR)/list.o
+	$(AR) rcs liblist.a $(OBJECT_DIR)/list.o
 
-main.o:		main.c
-	$(CC) $(CFLAGS) $(DEBUG) main.c -o main.o
-list.o:	list.c
-	$(CC) $(CFLAGS) $(DEBUG) list.c -o list.o
-trap.o:		trap.c
-	$(CC) $(CFLAGS) $(DEBUG) trap.c -o trap.o
-test01.o:	test01.c
-	$(CC) $(CFLAGS) $(DEBUG) test01.c -o test01.o
-poortool.o:	poortool.c
-	$(CC) $(CFLAGS) $(DEBUG) poortool.c -o poortool.o
+$(OBJECT_DIR):
+	-$(MAKE_DIR_CMD)
 
+$(OBJECT_DIR)/main.o:		main.c
+	$(CC) $(CFLAGS) $(DEBUG) main.c -o $(OBJECT_DIR)/main.o
+
+$(OBJECT_DIR)/list.o:	list.c
+	$(CC) $(CFLAGS) $(DEBUG) list.c -o $(OBJECT_DIR)/list.o
+
+$(OBJECT_DIR)/trap.o:		trap.c
+	$(CC) $(CFLAGS) $(DEBUG) trap.c -o $(OBJECT_DIR)/trap.o
+
+$(OBJECT_DIR)/test01.o:	test01.c
+	$(CC) $(CFLAGS) $(DEBUG) test01.c -o $(OBJECT_DIR)/test01.o
+
+$(OBJECT_DIR)/poortool.o:	poortool.c
+	$(CC) $(CFLAGS) $(DEBUG) poortool.c -o $(OBJECT_DIR)/poortool.o
+
+#
+# This is the "check" target: Test harness is in stack_check.ts file and 
+# this is converted by "check" into a C file which is linked to give another
+# executable. 
+# 
+# NOTE: This will not build if you have the Profiling enabled as the libstack.a 
+# contains gcov 
+#
+test_harness: liblist.a list_check.ts
+ifndef CHECK_FOR_CHK
+	@echo "** checkmk command not found"
+else
+	$(CHK) list_check.ts > list_check.c
+	$(CC) -o list_check.exe list_check.c -static -L. -lcheck -llist
+endif
+
+#
+# Code checking target
+#
 splint-it:
 	$(CODE_CHECK) $(CODE_CHECK_ARGS) main.c  
 	$(CODE_CHECK) $(CODE_CHECK_ARGS) trap.c   
@@ -49,12 +112,13 @@ splint-it:
 
 clean:
 	rm -f list.exe
-	rm -f list.o
+	rm -f list_check.exe
 	rm -f liblist.a
-	rm -f test01.o
-	rm -f main.o
-	rm -f trap.o
-	rm -f poortool.o
+	rm -f $(OBJECT_DIR)/main.o
+	rm -f $(OBJECT_DIR)/trap.o
+	rm -f $(OBJECT_DIR)/list.o
+	rm -f $(OBJECT_DIR)/test01.o
+	rm -f $(OBJECT_DIR)/poortool.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core

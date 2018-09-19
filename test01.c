@@ -1,23 +1,10 @@
-/*
+/**
  *****************************************************************************
  * 
  * MODULE: C Programming Examples
  *
- * $Header: $
- * $Archive:$
- * 
- * $Workfile: $
- *
- * $Author: Onyettr $
- *
- * NAME: Richard Onyett (STMicroelectronics,San Jose)
- * EMAIL: richard.onyett@st.com
- *
- * PURPOSE: Test harness
- * 
- * $Revision:$
- * $History: $
- *
+ * @brief  Test harness
+ * @author ronyett
  ***************************************************************************** 
  */
 

@@ -81,12 +81,14 @@ Prototypes of all functions contained in this file (in order of occurance)
 */
 
 int main ( void ) {
-  int result = 0;
+   int result = 0;
   
-  result = test_run();
-  if (result == 0) printf ("test_run - ok\n");
+   result = test_run();
+   if (result == 0) printf ("test_run - ok\n");
 
-  poortool_init();
+#if 0 
+   poortool_init();
+#endif
   
-  return 0;
+   return 0;
 }
