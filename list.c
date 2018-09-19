@@ -179,52 +179,54 @@ void list_add_front ( list_t *p, int value ) {
    p->NodeCount += 1;
 }
 
-/*!
- -- --------------------------------------------------------------
- -- \fn void list_delete ( list_t *p ) - delete a complete list
- -- 
- -- list_t *p    Pointer to the created list.
- -- 
- -- This will scan the whole list of nodes and delete the nodes 
- -- before deleting the list_p itself. 
- -- --------------------------------------------------------------
+/**
+ * @fn        int list_delete ( list_t *p ) - delete a complete list
+ * @brief     delete a given list plus any associated nodes. 
+ *
+ * @param[in] list_t *p    Pointer to the list to delete
+ *
+ * @return    int 0 for succcess, -1 if fail
+ *
+ * @note      This will scan the whole list of nodes and delete the nodes 
+ *            before deleting the list_p itself. 
+ */
+int list_delete ( list_t *p ) {
+    node_t *pNode = NULL;  
+    node_t *pNext = NULL;
 
-*/
-void list_delete ( list_t *p ) {
-  node_t *pNode = NULL;  
-  node_t *pNext = NULL;
+    if ( p == NULL ) {
+       printf("list_delete: list is empty\n");
 
-  if ( p == NULL ) {
-    printf("list_delete: list is empty\n");
+       return -1;
+    }
 
-    return;
-  }
-
-  pNode = p->pHead;        /* Point at first node  */
-  while ( pNode ) {
-    pNext = pNode->pNext;  /* Pick up the next one */
+    pNode = p->pHead;        /* Point at first node  */
+    while ( pNode ) {
+       pNext = pNode->pNext;  /* Pick up the next one */
 
 #if defined (DEEP_TRACE)    
-    printf("[%p] Next->[%p], Value %5d\n",
-	   (void *)pNode,
-	   (void *)pNode->pNext,
-	   pNode->value);
+       printf("[%p] Next->[%p], Value %5d\n",
+	      (void *)pNode,
+	      (void *)pNode->pNext,
+	      pNode->value);
 #endif
     
-    free(pNode);           /* Delete current node  */
-    pNode = pNext;         /* Move down the list   */
-  }
+       free(pNode);           /* Delete current node  */
+       pNode = pNext;         /* Move down the list   */
+    }
 
-  /*
-   * Delete list head itself. Setting values back to beginning as 
-   * was found this memory was still valid even after the free() 
-   * call
-   */
-  p->pFront = NULL;
-  p->pTail  = NULL;
-  p->pHead  = NULL;
-  p->NodeCount = 0;
-  free(p);
+    /*
+     * Delete list head itself. Setting values back to beginning as 
+     * was found this memory was still valid even after the free() 
+     * call
+     */
+    p->pFront = NULL;
+    p->pTail  = NULL;
+    p->pHead  = NULL;
+    p->NodeCount = 0;
+    free(p);
+
+    return 0;
 }  
 
 /*

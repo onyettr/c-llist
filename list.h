@@ -95,7 +95,7 @@ Global variables
 */
 
 extern list_t *list_create(void);
-extern void list_delete( list_t *p );
+extern int  list_delete( list_t *p );
 extern int  list_add ( list_t *p, int value );
 extern void list_add_front ( list_t *p, int value );
 extern void list_reverse ( list_t *p );
