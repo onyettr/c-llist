@@ -1,7 +1,7 @@
 /**
  *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
+ * @file   test_create.c
+ * @brief  Test harness for List creation
  * @author ronyett
  ***************************************************************************** 
  */
@@ -13,8 +13,8 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include "list.h"
 #include "test.h"
-#include "poortool.h"
 
 /*
 ******************************************************************************
@@ -39,6 +39,7 @@ Private variables (static)
 Private Macros
 ******************************************************************************
 */
+#define DIM(X) (int)(sizeof((X))/sizeof(int))
 
 /*
 ******************************************************************************
@@ -51,11 +52,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,14 +59,24 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
+int test_create ( void ) {
+  list_t *p = NULL;
+
+  printf("**** Linked List Test - create Starts\n");  
+
+  p = list_create();
+
+  printf("[%p] List created\n", (void*)p);
+  list_show(p);
+
+  list_delete(p);
+
+  printf("**** Linked List Test - create Ends\n");
   
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-#if 0 
-   poortool_init();
-#endif
-  
-   return 0;
+  return 0;
 }
+
+/*
+ Fin
+*/
+  

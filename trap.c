@@ -31,14 +31,11 @@ Includes
 #include <stdlib.h>
 #include "trap.h"
 
-/*
- -- --------------------------------------------------------------
- -- void Thrower(exception_t exp) - excep handler
- --    exception_t exp  - Execption to "throw"
- -- 
- -- returns: none
- -- --------------------------------------------------------------
-*/
+/**
+ * @fn    void Thrower(exception_t exp)
+ * @brief exception handing
+ * @param exp - exception type
+ */
 void Thrower(exception_t exp) {
   printf( "ouch something bad went on = ");
   if (exp == e_overflow ) {

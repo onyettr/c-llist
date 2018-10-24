@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list Empty operations
+ * @file test_empty.c
  */
 
 /*
@@ -13,8 +10,7 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "poortool.h"
+#include "list.h"
 
 /*
 ******************************************************************************
@@ -51,11 +47,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,14 +54,25 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
+int test_empty( void )
+{
+  list_t *emptyTest;
   
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-#if 0 
-   poortool_init();
-#endif
+  // Sign on
+  printf("**** Linked List Test - empty\n");
+
+  /*
+   * create a new list
+   */ 
+  emptyTest = list_create();
   
-   return 0;
+  printf("\tTest01 - list empty  TRUE = %s\n", (list_empty(emptyTest) == true ? "TRUE" : "FALSE"));  
+
+  list_add_element(emptyTest,100);
+  printf("\tTest02 - list empty  FALSE= %s\n", (list_empty(emptyTest) == true ? "TRUE" : "FALSE"));
+
+  printf("**** Linked List Test - empty Ends\n");
+  
+  return 0;
 }
+

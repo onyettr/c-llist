@@ -1,8 +1,7 @@
 /**
  *****************************************************************************
- * MODULE: C Programming
- *
- * @brief  Linked list implementation
+ * @file   list.c
+ * @brief  C Singly Linked list implementation
  * @author ronyett
  ***************************************************************************** 
  */
@@ -30,34 +29,11 @@ static node_t *NewNode(int value);
  * @fn      static int isEmpty(stack_t *pStack) - test if list isEmpty
  *
  * @brief   check if list is Empty
- *
+ * @param   *p  - the list
  * @return  Returns "true" or "false"
  */
 static bool isEmpty(list_t *p) {
    return p->pHead == NULL ? true : false;
-}
-
-/**
- *  @fn    list_t *list_create(void)
- *
- *  @brief Create a new list
- *
- *  @param 
- *
- *  @return NULL is failure
- */
-list_t *list_create(void) { /*@null@*/
-   list_t *p = (list_t*)NULL;
-  
-   p = (list_t *)malloc(sizeof(list_t)); /* @null */
-   if ( p != NULL) {
-      p->pFront = (node_t *)NULL;
-      p->pTail  = (node_t *)NULL;
-      p->pHead  = (node_t *)NULL;
-      p->NodeCount = 0;
-   }
-
-   return p; 
 }
 
 /**
@@ -79,22 +55,44 @@ static node_t *NewNode(int value) {
       p->value = value;
       p->pNext = NULL;
       p->pPrev = NULL;
+      p->pData = NULL;
    }
 
-   return p;
+   return (node_t *)p;
 }
 
 /**
+ *  @fn     list_t *list_create(void)
  *
- * @fn        void list_add ( list_t *p, int value ) 
+ *  @brief  Create a new list
+ *
+ *  @return NULL is failure
+ *  @note   create a list
+ */
+list_t *list_create(void) { /*@null@*/
+   list_t *p = (list_t*)NULL;
+  
+   p = (list_t *)malloc(sizeof(list_t)); /* @null */
+   if ( p != NULL) {
+      p->pFront = (node_t *)NULL;
+      p->pTail  = (node_t *)NULL;
+      p->pHead  = (node_t *)NULL;
+      p->NodeCount = 0;
+   }
+
+   return p; 
+}
+
+/**
+ * @fn        void list_add_element ( list_t *p, int value ) 
  *
  * @brief     This adds a node to the end of the list
  *
- * @param[in] list_p *p         Pointer to the list to add to 
- * @param[in] int value         Value
+ * @param[in] *p         Pointer to the list to add to 
+ * @param[in] value      Value of element
  *
  */
-int list_add ( list_t *p, int value ) {
+int list_add_element ( list_t *p, int value ) {
    node_t *pNode = NULL; 
 
    /*
@@ -139,9 +137,8 @@ int list_add ( list_t *p, int value ) {
  *
  * @brief     Adds a node to the front of the list
  * 
- * @param[in] list_p *p         Pointer to the list
- * 
- * @param[in] int value         Value to add
+ * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Value to add
  *
  * @return    none
  */
@@ -180,10 +177,147 @@ void list_add_front ( list_t *p, int value ) {
 }
 
 /**
+ *
+ * @fn        void list_add_back ( list_t *p, int value ) 
+ *
+ * @brief     Adds a node to the back of the list
+ * 
+ * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Value to add
+ *
+ * @return    none
+ */
+void list_add_back ( list_t *p, int value ) {
+   node_t *pNode = NULL; 
+   node_t *pHold = NULL;
+
+   (void)pNode;
+   (void)pHold;
+}
+
+/**
+ * @fn        
+ *
+ * @brief     
+ * 
+ * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Value to add
+ *
+ * @return    
+ */
+int  list_get_position(list_t *p, int position) {
+  return 0;
+}
+
+/**
+ * @fn        
+ *
+ * @brief     
+ * 
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Value at Front
+ */
+int  list_get_front   (list_t *p) {
+   return 0;  
+}
+
+/**
+ * @fn        
+ *
+ * @brief     
+ * 
+ * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Value to add
+ *
+ * @return    
+ */
+int  list_get_back    (list_t *p) {
+  return 0;
+}
+
+/**
+ * @fn        int  list_size (list_t *p) 
+ *
+ * @brief     Returns the size or number of nodes in a list
+ * 
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Size of the list
+ */
+int  list_size (list_t *p) {
+   int ListSize = 0;
+
+   if (list_empty(p)) {
+     return ListSize;
+   }
+
+   ListSize = p->NodeCount;
+
+   return ListSize;
+}
+
+/**
+ * @fn        bool list_empty       (list_t *p)
+ *
+ * @brief     Test is the list is empty
+ * 
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    TRUE if empty, FALSE if not
+ * @note      Also tests if the list has been created. 
+ */
+bool list_empty (list_t *p) {
+#if defined (DEBUG_TRACE)
+   printf("TRACE: list_empty called\n");
+#endif
+     
+   if (isEmpty(p) && (p != NULL)) {
+      return true;
+   }
+
+   return false;
+}
+
+/**
+ * @fn        list_t *GetListHead   (list_t *p) 
+ *
+ * @brief     Return the head of the list
+ * 
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Pointer to the Head or Null if empty
+ */
+node_t *GetListHead   (list_t *p) {
+   if (list_empty(p)) {
+     return (node_t *)NULL;
+   }
+
+   return p->pHead;
+}
+
+/**
+ * @fn        list_t *GetListTail   (list_t *p)
+ *
+ * @brief     Return the Tail of the List
+ * 
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Pointer to the Tail or NULL if empty
+ */
+node_t *GetListTail   (list_t *p) {
+   if (list_empty(p)) {
+     return (node_t *)NULL;
+   }
+
+   return p->pTail;
+}
+
+/**
  * @fn        int list_delete ( list_t *p ) - delete a complete list
  * @brief     delete a given list plus any associated nodes. 
  *
- * @param[in] list_t *p    Pointer to the list to delete
+ * @param[in] *p    Pointer to the list to delete
  *
  * @return    int 0 for succcess, -1 if fail
  *
@@ -196,7 +330,6 @@ int list_delete ( list_t *p ) {
 
     if ( p == NULL ) {
        printf("list_delete: list is empty\n");
-
        return -1;
     }
 
@@ -229,14 +362,14 @@ int list_delete ( list_t *p ) {
     return 0;
 }  
 
-/*
- -- --------------------------------------------------------------
- -- \fn    node_t *list_search_value(list_t *p, int value) {
- -- \brief Seach list for a given value
- -- \param list_t *p
- -- \param int value
- -- --------------------------------------------------------------
-*/
+/**
+ * @fn    node_t *list_search_value(list_t *p, int value) {
+ * @brief Seach list for a given value
+ * @param[in] *p
+ * @param[in] int
+ * @return     node_t *
+ * @note   search for a value and return associated node
+ */
 node_t *list_search_value(list_t *p, int value) {
   node_t *np = NULL;
 
@@ -272,21 +405,15 @@ node_t *list_search_value(list_t *p, int value) {
 void list_reverse ( list_t *p ) {
 }
 
-/*
- -- --------------------------------------------------------------
- -- \fn    void list_show ( list_t *p )
- -- \brief Display items in the list
- -- \param list_t *p
- -- --------------------------------------------------------------
-*/
+/**
+ * @fn     void list_show ( list_t *p )
+ * @brief  Display items in the list
+ * @param  *p - pointer to list
+ * @return none
+ */
 void list_show ( list_t *p ) {
   node_t *n = NULL;
-
-  if (isEmpty(p)) {
-    printf ("empty - nothing to display\n");
-
-    return;
-  }
+  
 
   printf("   Address   \tValue\t   pNext\tNumber of Nodes = %d\n", p->NodeCount);
   n = p->pHead;

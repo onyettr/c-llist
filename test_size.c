@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list size operations
+ * @file test_size.cpp
  */
 
 /*
@@ -13,8 +10,7 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "poortool.h"
+#include "list.h"
 
 /*
 ******************************************************************************
@@ -51,11 +47,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,14 +54,24 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
+int test_size ( void )
+{
+  // Sign on
+  printf("**** Linked List Test - size\n");
+
+  /*
+   * create a new list
+   */ 
+  list_t *SizeTest;
+
+  SizeTest = list_create();  
+  printf("\tTest01 - size on empty list %d \n",list_size(SizeTest));
+
+  list_add_element(SizeTest,100);
+  printf("\tTest02 - size on list 1 = %d\n",list_size(SizeTest));
+
+  printf("**** Linked ListTest - size Ends\n");
   
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-#if 0 
-   poortool_init();
-#endif
-  
-   return 0;
+  return 0;
 }
+

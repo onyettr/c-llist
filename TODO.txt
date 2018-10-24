@@ -1,16 +1,28 @@
-
-** TODO Add value paramater to the the list create
+* c-list tasks
+** TODO Add list_add_position API
+** TODO Add list_get_position API
+** TODO Add list_get_front API
+** TODO Add list_get_back  API
 ** TODO list_add return code is void, no way to indicate malloc() failure
-** TODO Add delete node / element
+** TODO Add list_delete_element
+** TODO Add GetListHead 
+** TODO Add GetListTail
 ** TODO Add sorting function
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO Add previous pointers to make doubly linked
 ** TODO Add better dump tool e.g. ascii art?
 ** TODO Create the stack example using the list libary
 ** TODO poortool.c - make it accept UP, DOWN history commands
+** TODO Add test_empty.c test harness
+** TODO Fake throw ?
+* Issues
 
-DONE LIST
-=========
+* Completed
+** DONE Add value paramater to the the list create
+** DONE Change list_add_element from list_add
+** DONE Add list_p to all APIs
+** DONE Add list_empty API -> DONE WW43
+** DONE Add list_size  API -> DONE WW43
 ** DONE Fix splint errors with bool definition in list.c
 ** DONE Add into git  -> DONE W04
 ** DONE Add deletion -> DONE W03

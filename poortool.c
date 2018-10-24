@@ -343,7 +343,7 @@ static void tt_list_add (int argc, char *argv[]) {
     Eval(argv[1], &value);
 
     if ( list_base[Handle] != NULL) {
-      list_add(list_base[Handle], value);      
+      list_add_element(list_base[Handle], value);      
     } else {
       printf("No list found\n");      
     }

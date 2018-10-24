@@ -1,24 +1,8 @@
-/*!
+/**
  *****************************************************************************
- * 
- * MODULE: C Programming Examples
- *
- * $Header: $
- * $Archive:$
- * 
- * $Workfile: $
- *
- * $Author: Onyettr $
- *
- * NAME: Richard Onyett 
- * EMAIL: 
- *
- * PURPOSE: 
- * Header file for simple stack
- * 
- * $Revision:$
- * $History: $
- *
+ * @file   trap.h
+ * @brief  Header file for simple stack
+ * @author ronyett
  ***************************************************************************** 
  */
 

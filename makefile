@@ -42,10 +42,14 @@ CODE_CHECK_ARGS	 = 	-showfunc -mustfreefresh -nullpass -nullret -noeffect
 # Libs, objs targets
 # liblist library is built from trap handling and the list implementation. 
 #
-OBJS  		     = $(OBJECT_DIR)/main.o 	\
-		       $(OBJECT_DIR)/test01.o	\
-		       $(OBJECT_DIR)/trap.o	\
+OBJS  		     = $(OBJECT_DIR)/main.o 		\
+		       $(OBJECT_DIR)/test_create.o	\
+		       $(OBJECT_DIR)/test_empty.o       \
+		       $(OBJECT_DIR)/test_size.o       	\
+		       $(OBJECT_DIR)/trap.o		\
 		       $(OBJECT_DIR)/poortool.o 
+
+TEST_HDRS	     = test.h
 
 LIBS  		     = liblist.a
 TEST_STACK 	     = list_test.ts
@@ -79,8 +83,14 @@ $(OBJECT_DIR)/list.o:	list.c
 $(OBJECT_DIR)/trap.o:		trap.c
 	$(CC) $(CFLAGS) $(DEBUG) trap.c -o $(OBJECT_DIR)/trap.o
 
-$(OBJECT_DIR)/test01.o:	test01.c
-	$(CC) $(CFLAGS) $(DEBUG) test01.c -o $(OBJECT_DIR)/test01.o
+$(OBJECT_DIR)/test_create.o:	test_create.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_create.c -o $(OBJECT_DIR)/test_create.o
+
+$(OBJECT_DIR)/test_empty.o:	test_empty.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_empty.c -o $(OBJECT_DIR)/test_empty.o
+
+$(OBJECT_DIR)/test_size.o:	test_size.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_size.c -o $(OBJECT_DIR)/test_size.o
 
 $(OBJECT_DIR)/poortool.o:	poortool.c
 	$(CC) $(CFLAGS) $(DEBUG) poortool.c -o $(OBJECT_DIR)/poortool.o
@@ -105,10 +115,10 @@ endif
 # Code checking target
 #
 splint-it:
+	$(CODE_CHECK) $(CODE_CHECK_ARGS) list.c     
 	$(CODE_CHECK) $(CODE_CHECK_ARGS) main.c  
 	$(CODE_CHECK) $(CODE_CHECK_ARGS) trap.c   
-	$(CODE_CHECK) $(CODE_CHECK_ARGS) test01.c
-	$(CODE_CHECK) $(CODE_CHECK_ARGS) list.c     
+	$(CODE_CHECK) $(CODE_CHECK_ARGS) test_create.c
 
 clean:
 	rm -f list.exe
@@ -117,8 +127,10 @@ clean:
 	rm -f $(OBJECT_DIR)/main.o
 	rm -f $(OBJECT_DIR)/trap.o
 	rm -f $(OBJECT_DIR)/list.o
-	rm -f $(OBJECT_DIR)/test01.o
 	rm -f $(OBJECT_DIR)/poortool.o
+	rm -f $(OBJECT_DIR)/test_create.o
+	rm -f $(OBJECT_DIR)/test_empty.o
+	rm -f $(OBJECT_DIR)/test_size.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core
