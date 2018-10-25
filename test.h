@@ -17,6 +17,7 @@ Includes
 int test_create();
 int test_empty();
 int test_size();
+int test_add  (void);
 int test_front(void);
 int test_back (void);
 

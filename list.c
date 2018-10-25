@@ -203,17 +203,87 @@ void list_add_back ( list_t *p, int value ) {
 }
 
 /**
- * @fn        
+ * @fn        void list_add_position( list_t *p, int position, int value)
  *
- * @brief     
+ * @brief     Adds a node to a list at 'Position'
  * 
  * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Position to add
  * @param[in] int  - Value to add
  *
- * @return    
+ * @return    none
+ */
+void list_add_position( list_t *p, int position, int value ) {
+   node_t *pTemp = NULL; 
+   node_t *pCurrent;
+   node_t *pPrevious;   
+   int i;
+
+   if ( position > list_size(p)) {
+     printf("list_add_position: position is beyond end of the list\n");
+     return;
+   }
+
+   if (position == 0) {
+     list_add_front(p,value);
+
+     return;
+   }
+
+   /* 
+    * Create new "back" element
+    */
+   pTemp = NewNode(value);
+   pTemp->pNext = NULL;
+
+   pCurrent = GetListHead(p);  /* Start of the list */
+   
+   /*
+    * Traverse the list until we get to position
+    */
+   for (i=1; i < position; i++) {
+      pPrevious = pCurrent;
+      pCurrent = pCurrent->pNext;
+   }
+
+   /* Now we are at Position, lets insert the new node */
+   pPrevious->pNext = pTemp;
+   pTemp->pNext     = pCurrent;
+  
+   p->NodeCount++;                 /* Increase the number of nodes                   */
+}
+
+/**
+ * @fn        int  list_get_position(list_t *p, int position) 
+ *
+ * @brief     Return an element value given a position in the list
+ * 
+ * @param[in] *p   - Pointer to the list
+ * @param[in] int  - Position of element in the list
+ *
+ * @return    int  - Value at the list position or -1 if empty
  */
 int  list_get_position(list_t *p, int position) {
-  return 0;
+  node_t *pCurrent;
+  int value = 0;
+
+  if (list_empty(p)) {
+     printf("list_get_position - list is empty");
+     return -1;
+  }
+
+  /*
+   * Traverse the list until we get to position
+   */
+  pCurrent = GetListHead(p);  /* Start of the list */
+  for (int i=1; i < position; i++) {
+     pCurrent = pCurrent->pNext;
+  }
+
+  /* Now we are at Position, lets insert the new node */
+  value = pCurrent->value;
+
+  return value;
 }
 
 /**
@@ -452,13 +522,23 @@ void list_show ( list_t *p ) {
 	   (void *)p->pTail);
   
     pCurrent = GetListHead(p);
-    while (pCurrent ) {
-       printf("%2d [%p]\t%5d\t[%p]\n",
+    while (pCurrent) {
+       printf("%2d [%p]\t%5d\t[%p]",
 	      Count,
 	      (void *)pCurrent,
 	      pCurrent->value,
 	      (void *)pCurrent->pNext);
 
+       if (p->NodeCount == 1) {
+	 printf("    <--- HEAD   <--- TAIL\n");	 
+       } else if (pCurrent == GetListHead(p)) {
+	 printf("    <--- HEAD\n");
+       } else if (pCurrent == GetListTail(p)) {
+	 printf("\t         <--- TAIL\n");	 
+       } else {
+	 printf("\n");
+       }
+       
        pCurrent = pCurrent->pNext;
        Count++;
     }

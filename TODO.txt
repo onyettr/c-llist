@@ -1,6 +1,4 @@
 * c-list tasks
-** TODO Add list_add_position API
-** TODO Add list_get_position API
 ** TODO list_add return code is void, no way to indicate malloc() failure
 ** TODO Add list_delete_element
 ** TODO Add sorting function
@@ -9,11 +7,13 @@
 ** TODO Add better dump tool e.g. ascii art?
 ** TODO Create the stack example using the list libary
 ** TODO poortool.c - make it accept UP, DOWN history commands
-** TODO Add test_empty.c test harness
 ** TODO Fake throw ?
 * Issues
 
 * Completed
+** DONE Add test_empty.c test harness
+** DONE Add list_add_position API
+** DONE Add list_get_position API
 ** DONE Add GetListHead 
 ** DONE Add GetListTail
 

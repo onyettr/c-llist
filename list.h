@@ -1,16 +1,15 @@
-/*
+/**
  *****************************************************************************
  * @file   list.h
- *
  * @brief  Header for list 
  * @detail Header file for simple linked list management library
  *
  * Two main datastructures here List_t and Node_t.
  *     List_t                  node_t              node_t
  *    pFront   ------------>   value               value
- *    pTail    ------------|   pNext ------------> pNext
+ *    pTail    ------------|   pNext ------------> pNext ---> NULL
  *                         |                         ^
- *                         |                         |
+ *    NodeCount=2          |                         |
  *                         ---------------------------
  *
  * Operational APIs
@@ -23,15 +22,14 @@
  * - Reverse list        Tail is now head, head is now tail
  * - Show List           This will dump the List and all nodes
  * - Search list         Given a value it searches for it and returns the node
- * - Get Front           Returns the head node of a given list
- * - Get Tail            Returns the Tail node of a given list
+ * - Get Front           Returns the head node value of a given list
+ * - Get Tail            Returns the Tail node value of a given list
  * - Size                Returns the size of a given list i.e. number of nodes
  * - Empty               Returns if the list is Empty
  * - GetListHead         Returns the head of a given list
- * - HetListTail         Returns the head of a given list
+ * - GetListTail         Returns the tail of a given list
  ***************************************************************************** 
  */
-
 #ifndef __LIST_H__
 #define __LIST_H__
 /*
@@ -54,7 +52,7 @@ Private Types
 */
 
 /**
- * @struct Node
+ * @struct Node_t
  * @brief  Data structure to hold the an "element" 
  */
 typedef struct node { 
@@ -65,14 +63,14 @@ typedef struct node {
 } node_t;
 
 /**
- * @struct list
- * @brief  Root list header for nodes
+ * @struct list_t
+ * @brief  Root list header for a created list
  */
 typedef struct list {
-  node_t *pFront;         /* Pointer to Front node */
-  node_t *pHead;
-  node_t *pTail;          /* Pointer to Tail node  */
-  int  NodeCount;         /* Nodes per list        */
+  node_t *pFront;         
+  node_t *pHead;          /* Pointer to Front node               */
+  node_t *pTail;          /* Pointer to Tail node                */
+  int  NodeCount;         /* Number of Nodes in this list        */
 } list_t;
 
 /*

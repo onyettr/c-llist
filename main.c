@@ -70,6 +70,7 @@ int main ( void ) {
   (void)test_size();
   (void)test_front();
   (void)test_back();
+  (void)test_add();
 #if 0 
    poortool_init();
 #endif
