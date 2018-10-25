@@ -1,7 +1,6 @@
 * c-list tasks
 ** TODO Add list_add_position API
 ** TODO Add list_get_position API
-** TODO Add list_get_front API
 ** TODO Add list_get_back  API
 ** TODO list_add return code is void, no way to indicate malloc() failure
 ** TODO Add list_delete_element
@@ -18,6 +17,7 @@
 * Issues
 
 * Completed
+** DONE Add list_get_front API
 ** DONE Add value paramater to the the list create
 ** DONE Change list_add_element from list_add
 ** DONE Add list_p to all APIs

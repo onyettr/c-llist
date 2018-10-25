@@ -216,10 +216,21 @@ int  list_get_position(list_t *p, int position) {
  * 
  * @param[in] *p   - Pointer to the list
  *
- * @return    Value at Front
+ * @return    Value at Front or -1 if empty
  */
 int  list_get_front   (list_t *p) {
-   return 0;  
+  int value = 0;
+#if (DEBUG_TRACE)
+  printf("TRACE: list_get_front called\n");
+#endif  
+
+  if (!list_empty(p)) {
+    value = (p->pHead)->value;        
+  } else {
+    return -1;
+  }
+  
+  return value;  
 }
 
 /**
@@ -246,7 +257,10 @@ int  list_get_back    (list_t *p) {
  * @return    Size of the list
  */
 int  list_size (list_t *p) {
-   int ListSize = 0;
+   int ListSize = 0;  
+#if defined (DEBUG_TRACE)
+   printf("TRACE: list_size called\n");
+#endif
 
    if (list_empty(p)) {
      return ListSize;
@@ -395,13 +409,11 @@ node_t *list_search_value(list_t *p, int value) {
   return np;  
 }
 
-/*
- -- --------------------------------------------------------------
- -- \fn    void list_reverse ( list_t *p )
- -- \brief Reverse the contents of the list passed
- -- \param list_t *p
- -- --------------------------------------------------------------
-*/
+/**
+ * @fn        void list_reverse ( list_t *p )
+ * @brief     Reverse the contents of the list passed
+ * @param[in] *p - list to reverse
+ */
 void list_reverse ( list_t *p ) {
 }
 
@@ -412,18 +424,26 @@ void list_reverse ( list_t *p ) {
  * @return none
  */
 void list_show ( list_t *p ) {
-  node_t *n = NULL;
+  node_t *pCurrent = NULL;
   
+  if (!list_empty(p)) {
+    int Count = 0;
 
-  printf("   Address   \tValue\t   pNext\tNumber of Nodes = %d\n", p->NodeCount);
-  n = p->pHead;
-  while ( n ) {
-     printf("[%p]\t%5d\t[%p]\n",
-  	     (void *)n,
-	     n->value,
-	    (void *)n->pNext);
+    printf("      Address   \tValue\t   pNext\tNumber of Nodes = %d\n", p->NodeCount);
+  
+    pCurrent = GetListHead(p);
+    while (pCurrent ) {
+       printf("%2d [%p]\t%5d\t[%p]\n",
+	      Count,
+	      (void *)pCurrent,
+	      pCurrent->value,
+	      (void *)pCurrent->pNext);
 
-     n = n->pNext;
+       pCurrent = pCurrent->pNext;
+       Count++;
+    }
+  } else {
+      printf("Error - list is empty\n");
   }
 }
 

@@ -55,6 +55,35 @@
     fail_unless(list_add_element(lp, 101) == 0, "add no failure");
 
 #
+#tcase list_get_front
+#
+#test list_get_front_empty_list
+    list_t *lp;
+    lp = list_create();
+    fail_unless(list_get_front(lp) == -1, "get front empty list no failure");    
+
+#test list_get_front_one_element_list
+    list_t *lp;
+    lp = list_create();
+    list_add_element(lp,200);
+    fail_unless(list_get_front(lp) == 200, "get front one element list no failure");    
+
+#test list_get_front_two_element_list
+    list_t *lp;
+    lp = list_create();
+    list_add_element(lp,200);
+    list_add_element(lp,300);    
+    fail_unless(list_get_front(lp) == 200, "get front two element list no failure");    
+
+#test list_get_front_new_front_element
+    list_t *lp;
+    lp = list_create();
+    list_add_element(lp,200);
+    list_add_element(lp,300);
+    list_add_front(lp,111);    
+    fail_unless(list_get_front(lp) == 111, "get front new front element list no failure");    
+
+#
 #tcase list_deletion
 #
 
