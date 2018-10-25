@@ -46,6 +46,7 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/test_create.o	\
 		       $(OBJECT_DIR)/test_empty.o       \
 		       $(OBJECT_DIR)/test_front.o      	\
+		       $(OBJECT_DIR)/test_back.o      	\
 		       $(OBJECT_DIR)/test_size.o       	\
 		       $(OBJECT_DIR)/trap.o		\
 		       $(OBJECT_DIR)/poortool.o 
@@ -93,6 +94,9 @@ $(OBJECT_DIR)/test_empty.o:	test_empty.c $(TEST_HDRS)
 $(OBJECT_DIR)/test_front.o:	test_front.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_front.c -o $(OBJECT_DIR)/test_front.o
 
+$(OBJECT_DIR)/test_back.o:	test_back.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_back.c -o $(OBJECT_DIR)/test_back.o
+
 $(OBJECT_DIR)/test_size.o:	test_size.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_size.c -o $(OBJECT_DIR)/test_size.o
 
@@ -136,6 +140,7 @@ clean:
 	rm -f $(OBJECT_DIR)/test_empty.o
 	rm -f $(OBJECT_DIR)/test_front.o
 	rm -f $(OBJECT_DIR)/test_size.o
+	rm -f $(OBJECT_DIR)/test_back.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core

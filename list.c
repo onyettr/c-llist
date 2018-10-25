@@ -188,11 +188,18 @@ void list_add_front ( list_t *p, int value ) {
  * @return    none
  */
 void list_add_back ( list_t *p, int value ) {
-   node_t *pNode = NULL; 
-   node_t *pHold = NULL;
+   node_t *pTemp = NULL; 
+   node_t *pCurrentTail;
+   
+   /* 
+    * Create new "back" element
+    */
+   pTemp = NewNode(value);
+   pCurrentTail = GetListTail(p);  /* Get the current Tail element                   */
+   pCurrentTail->pNext = pTemp;    /* Current Tail points to the new element created */
+   p->pTail = pTemp;               /* Advances the Tail to the new Tail elemenet     */
 
-   (void)pNode;
-   (void)pHold;
+   p->NodeCount++;                 /* Increase the number of nodes                   */
 }
 
 /**
@@ -234,17 +241,27 @@ int  list_get_front   (list_t *p) {
 }
 
 /**
- * @fn        
+ * @fn        int  list_get_back    (list_t *p)
  *
- * @brief     
+ * @brief     return the value at the back of the list
  * 
  * @param[in] *p   - Pointer to the list
- * @param[in] int  - Value to add
  *
- * @return    
+ * @return    value
  */
 int  list_get_back    (list_t *p) {
-  return 0;
+  int value = 0;
+#if (DEBUG_TRACE)
+  printf("TRACE: list_get_back called\n");
+#endif  
+
+  if (!list_empty(p)) {
+    value = (p->pTail)->value;        
+  } else {
+    return -1;
+  }
+  
+  return value;  
 }
 
 /**
@@ -429,7 +446,10 @@ void list_show ( list_t *p ) {
   if (!list_empty(p)) {
     int Count = 0;
 
-    printf("      Address   \tValue\t   pNext\tNumber of Nodes = %d\n", p->NodeCount);
+    printf("      Address   \tValue\t   pNext\t#Nodes [%d] pHead [%p] pTail [%p]\n",
+	   p->NodeCount,
+	   (void *)p->pHead,
+	   (void *)p->pTail);
   
     pCurrent = GetListHead(p);
     while (pCurrent ) {
