@@ -40,9 +40,7 @@ static bool isEmpty(list_t *p) {
  *  @fn     static node_t *NewNode(int value) 
  *
  *  @brief  Create an internal new node
- *
  *  @param  int value 
- *
  *  @return node_t * 
  * 
  *  @note   This is used only by list_add operation and so is private to this file. 
@@ -58,7 +56,7 @@ static node_t *NewNode(int value) {
       p->pData = NULL;
    }
 
-   return (node_t *)p;
+   return (node_t *)p; 
 }
 
 /**
@@ -67,7 +65,8 @@ static node_t *NewNode(int value) {
  *  @brief  Create a new list
  *
  *  @return NULL is failure
- *  @note   create a list
+ *
+ *  @note   create a list to whihc "elements" nodes are added. 
  */
 list_t *list_create(void) { /*@null@*/
    list_t *p = (list_t*)NULL;
@@ -91,6 +90,7 @@ list_t *list_create(void) { /*@null@*/
  * @param[in] *p         Pointer to the list to add to 
  * @param[in] value      Value of element
  *
+ * @return    = if ok, -1 is we have a malloc fail. 
  */
 int list_add_element ( list_t *p, int value ) {
    node_t *pNode = NULL; 
@@ -102,7 +102,7 @@ int list_add_element ( list_t *p, int value ) {
    if ( pNode == NULL ) {
       printf("list_add: failed to create a new node\n");
 
-      return -1;
+      return ERROR_LIST_ALLOCATION_FAILED;
    }
   
    if (p->pHead == NULL ) {
@@ -128,21 +128,21 @@ int list_add_element ( list_t *p, int value ) {
 
    p->NodeCount += 1;
 
-   return 0;
+   return SUCCESS;
 }
 
 /**
  *
- * @fn        void list_add_front ( list_t *p, int value ) 
+ * @fn        int list_add_front ( list_t *p, int value ) 
  *
  * @brief     Adds a node to the front of the list
  * 
  * @param[in] *p   - Pointer to the list
  * @param[in] int  - Value to add
  *
- * @return    none
+ * @return    0 (SUCCESS)
  */
-void list_add_front ( list_t *p, int value ) {
+int list_add_front ( list_t *p, int value ) {
    node_t *pNode = NULL; 
    node_t *pHold = NULL;
   
@@ -153,7 +153,7 @@ void list_add_front ( list_t *p, int value ) {
    if ( pNode == NULL ) {
       printf("list_add_front: failed to create a new node\n");
 
-     return;
+     return ERROR_LIST_ALLOCATION_FAILED;
    }
 
    if (p->pHead == NULL ) {
@@ -174,11 +174,12 @@ void list_add_front ( list_t *p, int value ) {
    }
 
    p->NodeCount += 1;
+
+   return SUCCESS;
 }
 
 /**
- *
- * @fn        void list_add_back ( list_t *p, int value ) 
+ * @fn        int list_add_back ( list_t *p, int value ) 
  *
  * @brief     Adds a node to the back of the list
  * 
@@ -187,7 +188,7 @@ void list_add_front ( list_t *p, int value ) {
  *
  * @return    none
  */
-void list_add_back ( list_t *p, int value ) {
+int list_add_back ( list_t *p, int value ) {
    node_t *pTemp = NULL; 
    node_t *pCurrentTail;
    
@@ -200,6 +201,8 @@ void list_add_back ( list_t *p, int value ) {
    p->pTail = pTemp;               /* Advances the Tail to the new Tail elemenet     */
 
    p->NodeCount++;                 /* Increase the number of nodes                   */
+
+   return SUCCESS;
 }
 
 /**
@@ -213,7 +216,7 @@ void list_add_back ( list_t *p, int value ) {
  *
  * @return    none
  */
-void list_add_position( list_t *p, int position, int value ) {
+int list_add_position( list_t *p, int position, int value ) {
    node_t *pTemp = NULL; 
    node_t *pCurrent;
    node_t *pPrevious;   
@@ -221,13 +224,14 @@ void list_add_position( list_t *p, int position, int value ) {
 
    if ( position > list_size(p)) {
      printf("list_add_position: position is beyond end of the list\n");
-     return;
+
+     return ERROR_LIST_BAD_POSITION;
    }
 
    if (position == 0) {
      list_add_front(p,value);
 
-     return;
+     return SUCCESS;
    }
 
    /* 
@@ -251,6 +255,8 @@ void list_add_position( list_t *p, int position, int value ) {
    pTemp->pNext     = pCurrent;
   
    p->NodeCount++;                 /* Increase the number of nodes                   */
+
+   return SUCCESS;
 }
 
 /**
@@ -266,17 +272,19 @@ void list_add_position( list_t *p, int position, int value ) {
 int  list_get_position(list_t *p, int position) {
   node_t *pCurrent;
   int value = 0;
-
+  int i;
+  
   if (list_empty(p)) {
      printf("list_get_position - list is empty");
-     return -1;
+
+     return ERROR_LIST_EMPTY;
   }
 
   /*
    * Traverse the list until we get to position
    */
   pCurrent = GetListHead(p);  /* Start of the list */
-  for (int i=1; i < position; i++) {
+  for (i=1; i < position; i++) {
      pCurrent = pCurrent->pNext;
   }
 
@@ -287,9 +295,9 @@ int  list_get_position(list_t *p, int position) {
 }
 
 /**
- * @fn        
+ * @fn        int  list_get_front   (list_t *p)
  *
- * @brief     
+ * @brief     Return the value at the front of the list
  * 
  * @param[in] *p   - Pointer to the list
  *
@@ -304,7 +312,7 @@ int  list_get_front   (list_t *p) {
   if (!list_empty(p)) {
     value = (p->pHead)->value;        
   } else {
-    return -1;
+    return ERROR_LIST_EMPTY;
   }
   
   return value;  
@@ -328,7 +336,7 @@ int  list_get_back    (list_t *p) {
   if (!list_empty(p)) {
     value = (p->pTail)->value;        
   } else {
-    return -1;
+    return ERROR_LIST_EMPTY;
   }
   
   return value;  
@@ -345,9 +353,9 @@ int  list_get_back    (list_t *p) {
  */
 int  list_size (list_t *p) {
    int ListSize = 0;  
-#if defined (DEBUG_TRACE)
+   //#if defined (DEBUG_TRACE)
    printf("TRACE: list_size called\n");
-#endif
+   //#endif
 
    if (list_empty(p)) {
      return ListSize;
@@ -412,6 +420,109 @@ node_t *GetListTail   (list_t *p) {
    }
 
    return p->pTail;
+}
+
+/**
+ * @fn        int list_delete_element(list_t *p, int position) 
+ * @brief     delete a given element at 'position'
+ *
+ * @param[in] *p    Pointer to the list to delete
+ * @param[in] int   position in the list
+ * @return    none
+ *
+ * @note      
+ */
+int list_delete_element(list_t *p, int position) {
+  node_t *pCurrent;
+  node_t *pPrevious;
+
+  if (position > list_size(p)) {
+    printf("list_delete_element - position beyond list_size\n");
+
+    return ERROR_LIST_BAD_POSITION;
+  }
+
+  /*
+   * test if position is first
+   */
+  pCurrent = GetListHead(p);
+  if (position == 0) {
+    p->pHead = pCurrent->pNext;
+    pCurrent->pNext = NULL;
+  } else {
+     int i;
+     for (i=0; i < position; i++) {
+         pPrevious = pCurrent;
+         pCurrent = pCurrent->pNext;
+      }
+      pPrevious->pNext = pCurrent->pNext;    /* Previous entry is now pointing to one beyond the deleted entry */      
+  }
+  free(pCurrent);                            /* Delete the node                                                */
+  p->NodeCount--;                            /* Decrement the node count                                       */
+
+  return SUCCESS;
+}
+
+/**
+ * @fn        int list_delete_front(list_t *p)
+ * @brief     delete the Front element
+ *
+ * @param[in] *p    Pointer to the list to delete the element
+ *
+ * @note      
+ */
+int list_delete_front(list_t *p) {
+   int ErrCode; 
+   ErrCode = list_delete_element(p,0);
+
+   return ErrCode;
+}
+ 
+/**
+ * @fn        int list_delete_back(list_t *p) 
+ * @brief     delete the Back element
+ *
+ * @param[in] *p    Pointer to the list to delete
+ *
+ * @note      
+ */
+int list_delete_back(list_t *p) {
+  node_t *pCurrent;
+  
+  /*
+   * Test of the list is empty
+   */
+  printf("list_delete_back size %d\n", list_size(p));
+  if (list_size(p) <= 0) {
+    printf("list_delete_back: list is empty\n");
+
+    return ERROR_LIST_EMPTY;
+  }
+
+  /*
+   * Test if we have only one element 
+   */
+  if(list_size(p) == 1) {
+    free(p->pHead);
+    p->pHead = (node_t *)NULL;
+    p->pTail = (node_t *)NULL;
+    p->NodeCount = 0;
+
+    return SUCCESS;
+  }
+
+  pCurrent = p->pHead;
+  printf("pCurrent [%p] \n", (void *)pCurrent);
+  while( pCurrent->pNext->pNext != NULL ) {
+    pCurrent = pCurrent->pNext;
+    printf("pCurrent [%p] \n", (void *)pCurrent);    
+  }
+  free(pCurrent);
+  pCurrent->pNext = NULL;
+  p->pTail = pCurrent;
+  p->NodeCount--;
+  
+  return SUCCESS;
 }
 
 /**

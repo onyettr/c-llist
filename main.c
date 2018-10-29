@@ -71,6 +71,7 @@ int main ( void ) {
   (void)test_front();
   (void)test_back();
   (void)test_add();
+  (void)test_delete();
 #if 0 
    poortool_init();
 #endif

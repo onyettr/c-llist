@@ -9,7 +9,7 @@
 ** TODO poortool.c - make it accept UP, DOWN history commands
 ** TODO Fake throw ?
 * Issues
-
+** TODO list_delete_element for() loop assues we have elements
 * Completed
 ** DONE Add test_empty.c test harness
 ** DONE Add list_add_position API

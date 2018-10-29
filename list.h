@@ -78,6 +78,10 @@ typedef struct list {
 Private Macros
 ******************************************************************************
 */
+#define SUCCESS                           0
+#define ERROR_LIST_EMPTY                -10
+#define ERROR_LIST_ALLOCATION_FAILED    -11
+#define ERROR_LIST_BAD_POSITION         -12
 
 /*
 ******************************************************************************
@@ -88,15 +92,17 @@ Global variables
 list_t *list_create(void);
 int  list_delete( list_t *p );
 int  list_add_element (list_t *p, int value );
-void list_add_front   (list_t *p, int value );
-void list_add_back    (list_t *p, int value );
-void list_add_position(list_t *p, int position, int value );
+int  list_add_front   (list_t *p, int value );
+int  list_add_back    (list_t *p, int value );
+int  list_add_position(list_t *p, int position, int value );
 void list_reverse     (list_t *p);
 void list_show        (list_t *p);
 int  list_get_position(list_t *p, int position); // return value at "position"
 int  list_get_front   (list_t *p);         // return value of first list element
 int  list_get_back    (list_t *p);         // return value of tail list element
-void list_delete_element(list_t *p, int position); // Delete element  at position, decreases list size by 1  
+int  list_delete_element(list_t *p, int position); // Delete element  at position, decreases list size by 1
+int  list_delete_front(list_t *p);         // Delete element at the Front
+int  list_delete_back (list_t *p);         // Delete element at the Back
 void list_sort        (list_t *p);         // Sort the list
 int  list_size        (list_t *p);         // Number of elements in the list
 bool list_empty       (list_t *p);         // is the list empty?
