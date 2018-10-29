@@ -73,8 +73,6 @@ static void test_delete_front(void) {
 
 static void test_delete_back(void) {
   list_t *delTest;
-  list_t *delTest1b;
-  list_t *delTest1c;  
 
   /*
    * create a new list
@@ -89,19 +87,25 @@ static void test_delete_back(void) {
   list_delete_back(delTest);
   printf("\tReturn (102) = %d\n", list_get_back(delTest));
   list_show(delTest);
+}
+ 
+static void test_delete_back_1B(void) {
+  list_t *delTest1b;
 
   printf("\tTest01b - del back element, zero elements\n");
-  delTest1b = list_create();
-  if (delTest1b == NULL) {
-    printf("FAILED TO ALLOCATE!\n");
-  } else
-    printf("delTest1b %p, Nodes %d\n",(void *)delTest1b, delTest1b->NodeCount);
-  //  printf("\tReturn (-10) = %d\n", list_delete_back(delTest1b));
+  delTest1b = list_create(); 
+  printf("\tReturn (-10) = %d\n", list_delete_back(delTest1b));
+}
+
+static void test_delete_back_1C(void) {
+  list_t *delTest1c;  
 
   printf("\tTest01c - del back element, one element\n");
-  delTest1c = list_create();
+  delTest1c = list_create();  
   list_add_element(delTest1c,200);
-  printf("\tReturn (-10) = %d\n", list_delete_back(delTest1c));  
+  list_show(delTest1c);    
+  printf("\tReturn (0) = %d\n", list_delete_back(delTest1c));
+  list_show(delTest1c);      
 }
 
 int test_delete ( void )
@@ -110,6 +114,9 @@ int test_delete ( void )
   printf("**** Linked List Test - del\n");
 
   test_delete_front();
+
+  test_delete_back_1B();
+  test_delete_back_1C();
   test_delete_back ();
   
   printf("**** Linked List Test - del Ends\n");

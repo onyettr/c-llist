@@ -69,8 +69,10 @@ static node_t *NewNode(int value) {
  *  @note   create a list to whihc "elements" nodes are added. 
  */
 list_t *list_create(void) { /*@null@*/
-   list_t *p = (list_t*)NULL;
-  
+  list_t *p = (list_t*)NULL;
+#if defined(DEBUG_TRACE)
+   printf("list_create: called\n");
+#endif   
    p = (list_t *)malloc(sizeof(list_t)); /* @null */
    if ( p != NULL) {
       p->pFront = (node_t *)NULL;
@@ -78,6 +80,9 @@ list_t *list_create(void) { /*@null@*/
       p->pHead  = (node_t *)NULL;
       p->NodeCount = 0;
    }
+#if defined (DEEP_TRACE)
+   printf("list_create: %p \n", (void*)p);
+#endif   
 
    return p; 
 }
@@ -353,9 +358,9 @@ int  list_get_back    (list_t *p) {
  */
 int  list_size (list_t *p) {
    int ListSize = 0;  
-   //#if defined (DEBUG_TRACE)
+#if defined (DEBUG_TRACE)
    printf("TRACE: list_size called\n");
-   //#endif
+#endif
 
    if (list_empty(p)) {
      return ListSize;
@@ -492,9 +497,7 @@ int list_delete_back(list_t *p) {
   /*
    * Test of the list is empty
    */
-  printf("list_delete_back size %d\n", list_size(p));
   if (list_size(p) <= 0) {
-    printf("list_delete_back: list is empty\n");
 
     return ERROR_LIST_EMPTY;
   }
@@ -512,10 +515,10 @@ int list_delete_back(list_t *p) {
   }
 
   pCurrent = p->pHead;
-  printf("pCurrent [%p] \n", (void *)pCurrent);
+  //  printf("pCurrent [%p] \n", (void *)pCurrent);
   while( pCurrent->pNext->pNext != NULL ) {
     pCurrent = pCurrent->pNext;
-    printf("pCurrent [%p] \n", (void *)pCurrent);    
+    //    printf("pCurrent [%p] \n", (void *)pCurrent);    
   }
   free(pCurrent);
   pCurrent->pNext = NULL;
@@ -542,7 +545,7 @@ int list_delete ( list_t *p ) {
 
     if ( p == NULL ) {
        printf("list_delete: list is empty\n");
-       return -1;
+       return ERROR_LIST_EMPTY;
     }
 
     pNode = p->pHead;        /* Point at first node  */
@@ -654,7 +657,10 @@ void list_show ( list_t *p ) {
        Count++;
     }
   } else {
-      printf("Error - list is empty\n");
+    printf("\t#Nodes [%d] pHead [%p] pTail [%p]\n",
+	   p->NodeCount,
+	   (void *)p->pHead,
+	   (void *)p->pTail);
   }
 }
 

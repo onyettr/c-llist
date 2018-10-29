@@ -150,7 +150,7 @@ clean:
 	rm -f $(OBJECT_DIR)/test_size.o
 	rm -f $(OBJECT_DIR)/test_back.o
 	rm -f $(OBJECT_DIR)/test_add.o
-	rm -f $(OBJECT_DIR)/test_de;.o
+	rm -f $(OBJECT_DIR)/test_del.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core
