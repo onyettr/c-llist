@@ -495,35 +495,40 @@ int list_delete_back(list_t *p) {
   node_t *pCurrent;
   
   /*
-   * Test of the list is empty
+   * if the list is empty, lets return
    */
   if (list_size(p) <= 0) {
-
     return ERROR_LIST_EMPTY;
   }
 
   /*
-   * Test if we have only one element 
+   * if we have only one element, then last is first!
    */
   if(list_size(p) == 1) {
-    free(p->pHead);
-    p->pHead = (node_t *)NULL;
-    p->pTail = (node_t *)NULL;
-    p->NodeCount = 0;
+    free(p->pHead);          /* Free the last node      */
+    p->pHead = (node_t *)NULL; /* Plug the root         */
+    p->pTail = (node_t *)NULL; /* Plug the root         */
+    p->NodeCount = 0;        /* No nodes anymore        */
 
     return SUCCESS;
   }
 
+  /*
+   * Scan from the Head of the list until we find the end
+   * NOTE: we are looking beyond the next for the end
+   */
   pCurrent = p->pHead;
-  //  printf("pCurrent [%p] \n", (void *)pCurrent);
+
   while( pCurrent->pNext->pNext != NULL ) {
     pCurrent = pCurrent->pNext;
-    //    printf("pCurrent [%p] \n", (void *)pCurrent);    
   }
-  free(pCurrent);
-  pCurrent->pNext = NULL;
-  p->pTail = pCurrent;
-  p->NodeCount--;
+
+  /* pCurrent is now at the last (but one) element node */
+  free(pCurrent->pNext);     /* Delete the last element */
+
+  pCurrent->pNext = NULL;    /* Current is now the last */
+  p->pTail = pCurrent;       /* Update the Tail to last */
+  p->NodeCount--;            /* Decrement the nodeCount */
   
   return SUCCESS;
 }
@@ -544,7 +549,6 @@ int list_delete ( list_t *p ) {
     node_t *pNext = NULL;
 
     if ( p == NULL ) {
-       printf("list_delete: list is empty\n");
        return ERROR_LIST_EMPTY;
     }
 

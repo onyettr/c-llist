@@ -60,7 +60,7 @@
 #test list_get_front_empty_list
     list_t *lp;
     lp = list_create();
-    fail_unless(list_get_front(lp) == -1, "get front empty list no failure");    
+    fail_unless(list_get_front(lp) == ERROR_LIST_EMPTY, "get front empty list no failure");    
 
 #test list_get_front_one_element_list
     list_t *lp;
@@ -89,7 +89,7 @@
 #test list_get_back_empty_list
     list_t *lp;
     lp = list_create();
-    fail_unless(list_get_back(lp) == -1, "get back empty list no failure");    
+    fail_unless(list_get_back(lp) == ERROR_LIST_EMPTY, "get back empty list no failure");    
 
 #test list_get_back_one_element_list
     list_t *lp;
@@ -120,11 +120,45 @@
 # test list_delete_negative_list_empty
      list_t *lp;
      lp = NULL;
-     fail_unless(list_delete(lp) == -1, "list deletion: list is empty (NULL)");
+     fail_unless(list_delete(lp) == ERROR_LIST_EMPTY, "list deletion: list is empty (NULL)");
 
 # test list_delete_postitve_list_populated
      list_t *lp = NULL;
      lp = list_create();
      fail_unless(lp != NULL, "list create failed");
      fail_unless(list_add_element(lp, 101) == 0, "add no failure");
-     fail_unless(list_delete(lp) == 0, "list deletion: ok");     
+     fail_unless(list_delete(lp) == 0, "list deletion: ok");
+
+# test list_delete_front_positive
+     list_t *lp = NULL;
+     lp = list_create();
+     fail_unless(lp != NULL, "list create failed");
+     fail_unless(list_add_element(lp, 101) == 0, "add no failure");
+     fail_unless(list_add_element(lp, 102) == 0, "add no failure");
+     fail_unless(list_delete_front(lp) == SUCCESS, "list_deletion: list empty");
+     fail_unless(list_get_front(lp) == 102, "list_get_front: fail");
+
+# test list_delete_back_negative_no_elements_1B
+     list_t *lp = NULL;
+     lp = list_create();
+     fail_unless(lp != NULL, "list create failed");
+     fail_unless(list_delete_back(lp) == ERROR_LIST_EMPTY, "list_deletion: list is not empty");     
+
+# test list_delete_back_positive_one_element_1C
+     list_t *lp = NULL;
+     lp = list_create();
+     fail_unless(lp != NULL, "list create failed");
+     fail_unless(list_add_element(lp, 200) == 0, "add no failure");     
+     fail_unless(list_delete_back(lp) == 0, "list_delete_back: list fail");     
+
+# test list_delete_back_positive_1A
+     list_t *lp = NULL;
+     lp = list_create();
+     fail_unless(lp != NULL, "list create failed");
+     fail_unless(list_add_element(lp, 101) == 0, "add failure");
+     fail_unless(list_add_element(lp, 102) == 0, "add failure");
+     fail_unless(list_add_element(lp, 103) == 0, "add failure");
+//     list_show(lp);
+     fail_unless(list_delete_back(lp) == SUCCESS, "list_deletion failed");
+     fail_unless(list_get_back(lp) == 102, "list_get_back: fail");     
+//     list_show(lp);
