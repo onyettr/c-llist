@@ -115,9 +115,9 @@ int test_delete ( void )
 
   test_delete_front();
 
+  test_delete_back ();  
   test_delete_back_1B();
   test_delete_back_1C();
-  test_delete_back ();
   
   printf("**** Linked List Test - del Ends\n");
   

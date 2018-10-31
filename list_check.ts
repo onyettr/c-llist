@@ -158,7 +158,5 @@
      fail_unless(list_add_element(lp, 101) == 0, "add failure");
      fail_unless(list_add_element(lp, 102) == 0, "add failure");
      fail_unless(list_add_element(lp, 103) == 0, "add failure");
-//     list_show(lp);
      fail_unless(list_delete_back(lp) == SUCCESS, "list_deletion failed");
      fail_unless(list_get_back(lp) == 102, "list_get_back: fail");     
-//     list_show(lp);
