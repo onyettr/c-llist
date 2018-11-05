@@ -1,6 +1,6 @@
 /**
  * @brief Test harness for single linked list size operations
- * @file test_size.cpp
+ * @file test_size.c
  */
 
 /*

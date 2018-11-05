@@ -1,8 +1,8 @@
 /**
  *****************************************************************************
- * @file   list.h
- * @brief  Header for list 
- * @detail Header file for simple linked list management library
+ * @file    list.h
+ * @brief   Header for list 
+ * @details Header file for simple linked list management library
  *
  * Two main datastructures here List_t and Node_t.
  *     List_t                  node_t              node_t

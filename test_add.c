@@ -1,6 +1,6 @@
 /**
  * @brief Test harness for single linked list add operations
- * @file test_add.cpp
+ * @file test_add.c
  */
 
 /*

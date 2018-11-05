@@ -40,8 +40,8 @@ static bool isEmpty(list_t *p) {
  *  @fn     static node_t *NewNode(int value) 
  *
  *  @brief  Create an internal new node
- *  @param  int value 
- *  @return node_t * 
+ *  @param  value - element to add
+ *  @return node_t * - new node
  * 
  *  @note   This is used only by list_add operation and so is private to this file. 
  */
@@ -142,8 +142,8 @@ int list_add_element ( list_t *p, int value ) {
  *
  * @brief     Adds a node to the front of the list
  * 
- * @param[in] *p   - Pointer to the list
- * @param[in] int  - Value to add
+ * @param[in] *p    - Pointer to the list
+ * @param[in] value -  to add
  *
  * @return    0 (SUCCESS)
  */
@@ -188,8 +188,8 @@ int list_add_front ( list_t *p, int value ) {
  *
  * @brief     Adds a node to the back of the list
  * 
- * @param[in] *p   - Pointer to the list
- * @param[in] int  - Value to add
+ * @param[in] *p    - Pointer to the list
+ * @param[in] value - to add
  *
  * @return    none
  */
@@ -215,9 +215,9 @@ int list_add_back ( list_t *p, int value ) {
  *
  * @brief     Adds a node to a list at 'Position'
  * 
- * @param[in] *p   - Pointer to the list
- * @param[in] int  - Position to add
- * @param[in] int  - Value to add
+ * @param[in] *p       - Pointer to the list
+ * @param[in] position - place to add
+ * @param[in] value    - to add
  *
  * @return    none
  */
@@ -270,7 +270,7 @@ int list_add_position( list_t *p, int position, int value ) {
  * @brief     Return an element value given a position in the list
  * 
  * @param[in] *p   - Pointer to the list
- * @param[in] int  - Position of element in the list
+ * @param[in] position of element in the list
  *
  * @return    int  - Value at the list position or -1 if empty
  */
@@ -432,7 +432,7 @@ node_t *GetListTail   (list_t *p) {
  * @brief     delete a given element at 'position'
  *
  * @param[in] *p    Pointer to the list to delete
- * @param[in] int   position in the list
+ * @param[in] position in the list
  * @return    none
  *
  * @note      
@@ -584,10 +584,10 @@ int list_delete ( list_t *p ) {
 /**
  * @fn    node_t *list_search_value(list_t *p, int value) {
  * @brief Seach list for a given value
- * @param[in] *p
- * @param[in] int
+ * @param[in] *p    - pointer to the list
+ * @param[in] value - search element
  * @return     node_t *
- * @note   search for a value and return associated node
+ * @note   search for a value and return associated node, NULL means not found. 
  */
 node_t *list_search_value(list_t *p, int value) {
   node_t *np = NULL;
