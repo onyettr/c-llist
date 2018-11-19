@@ -293,7 +293,6 @@ int  list_get_position(list_t *p, int position) {
      pCurrent = pCurrent->pNext;
   }
 
-  /* Now we are at Position, lets insert the new node */
   value = pCurrent->value;
 
   return value;
@@ -309,7 +308,7 @@ int  list_get_position(list_t *p, int position) {
  * @return    Value at Front or -1 if empty
  */
 int  list_get_front   (list_t *p) {
-  int value = 0;
+  int value = SUCCESS;
 #if (DEBUG_TRACE)
   printf("TRACE: list_get_front called\n");
 #endif  
@@ -582,20 +581,21 @@ int list_delete ( list_t *p ) {
 }  
 
 /**
- * @fn    node_t *list_search_value(list_t *p, int value) {
+ * @fn    int list_search(list_t *p, int value) {
  * @brief Seach list for a given value
  * @param[in] *p    - pointer to the list
  * @param[in] value - search element
- * @return     node_t *
- * @note   search for a value and return associated node, NULL means not found. 
+ * @return    int   - Position in the list
+ * @note  search for a value and return associated position, -1 means not found
  */
-node_t *list_search_value(list_t *p, int value) {
-  node_t *np = NULL;
-
+int list_search(list_t *p, int value) {
+  int Position = 0;
+  node_t *np;
+  
   if ( p == NULL) {
     printf("list_search_value: no list to search!\n");
 
-    return np;
+    return -1;
   }
 
   np = p->pHead;        /* get first node */
@@ -606,12 +606,13 @@ node_t *list_search_value(list_t *p, int value) {
       printf("list_search_value: found!\n");
 #endif
 
-      return np;
+      return Position;
     }
     np = np->pNext;
+    Position++;
   }
 
-  return np;  
+  return -1;         /* Not found */
 }
 
 /**

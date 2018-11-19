@@ -1,7 +1,7 @@
 * c-list tasks
-** TODO list_add return code is void, no way to indicate malloc() failure
-** TODO Add list_delete_element
 ** TODO Add sorting function
+** TODO Add test harness for search
+** TODO Search should return a position not a node_t
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO Add previous pointers to make doubly linked
 ** TODO Add better dump tool e.g. ascii art?
@@ -11,6 +11,8 @@
 * Issues
 ** TODO list_delete_element for() loop assues we have elements
 * Completed
+** DONE list_add return code is void, no way to indicate malloc() failure
+** DONE Add list_delete_element
 ** DONE Add test_empty.c test harness
 ** DONE Add list_add_position API
 ** DONE Add list_get_position API
