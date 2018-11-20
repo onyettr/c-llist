@@ -97,6 +97,14 @@ static void test_delete_back_1B(void) {
   printf("\tReturn (-10) = %d\n", list_delete_back(delTest1b));
 }
 
+static void test_delete_element(void) {
+  list_t *delTest;
+
+  printf("\tTest01 - del element, zero elements\n");
+  delTest = list_create(); 
+  printf("\tReturn (-10) = %d\n", list_delete_element(delTest,0));
+}
+
 static void test_delete_back_1C(void) {
   list_t *delTest1c;  
 
@@ -113,6 +121,7 @@ int test_delete ( void )
   // Sign on
   printf("**** Linked List Test - del\n");
 
+  test_delete_element();
   test_delete_front();
 
   test_delete_back ();  

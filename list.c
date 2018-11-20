@@ -440,6 +440,10 @@ int list_delete_element(list_t *p, int position) {
   node_t *pCurrent;
   node_t *pPrevious;
 
+  if (list_size(p) == 0) {
+    return ERROR_LIST_EMPTY;
+  }
+  
   if (position > list_size(p)) {
     printf("list_delete_element - position beyond list_size\n");
 
@@ -477,6 +481,7 @@ int list_delete_element(list_t *p, int position) {
  */
 int list_delete_front(list_t *p) {
    int ErrCode; 
+
    ErrCode = list_delete_element(p,0);
 
    return ErrCode;

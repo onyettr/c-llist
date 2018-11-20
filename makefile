@@ -54,6 +54,8 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/trap.o		\
 		       $(OBJECT_DIR)/poortool.o 
 
+STACK_OBJ	     = $(OBJECT_DIR)/stack.o
+
 TEST_HDRS	     = test.h
 
 LIBS  		     = liblist.a
@@ -62,20 +64,26 @@ TEST_STACK 	     = list_test.ts
 #*******************************************************************************
 # Build targets:
 # all		Creates object directory, builds executable and runs checker
+# stack.exe     Stack example using linked list library
 # lib		Build only the list library, no test harness
 # splint-it	run the Syntax checker
 # clean		Delete object and library files
 #*******************************************************************************
 
-all:	$(OBJECT_DIR) list.exe liblist.a test_harness
+all:	$(OBJECT_DIR) list.exe liblist.a test_harness stack.exe
 
 # The old order of linking chestnut had me going here! Objs need to be first in the list with library last
 list.exe:	$(OBJS) $(LIBS)
 	$(LINK) $(OBJS) $(LFLAGS) -llist -o list.exe
 
+# Example of a stack using a linked list
+stack.exe:	$(STACK_OBJ) liblist.a
+	$(LINK) $(STACK_OBJ) $(LFLAGS) -llist -o stack.exe
+
 liblist.a:	$(OBJECT_DIR)/list.o
 	$(AR) rcs liblist.a $(OBJECT_DIR)/list.o
 
+# Main objects
 $(OBJECT_DIR):
 	-$(MAKE_DIR_CMD)
 
@@ -115,6 +123,9 @@ $(OBJECT_DIR)/test_del.o:	test_del.c $(TEST_HDRS)
 $(OBJECT_DIR)/poortool.o:	poortool.c
 	$(CC) $(CFLAGS) $(DEBUG) poortool.c -o $(OBJECT_DIR)/poortool.o
 
+$(OBJECT_DIR)/stack.o:		stack.c
+	$(CC) $(CFLAGS) $(DEBUG) stack.c -o $(OBJECT_DIR)/stack.o
+
 #
 # This is the "check" target: Test harness is in stack_check.ts file and 
 # this is converted by "check" into a C file which is linked to give another
@@ -142,6 +153,7 @@ splint-it:
 
 clean:
 	rm -f list.exe
+	rm -f stack.exe
 	rm -f list_check.exe
 	rm -f liblist.a
 	rm -f $(OBJECT_DIR)/main.o
@@ -156,6 +168,7 @@ clean:
 	rm -f $(OBJECT_DIR)/test_back.o
 	rm -f $(OBJECT_DIR)/test_add.o
 	rm -f $(OBJECT_DIR)/test_del.o
+	rm -f $(OBJECT_DIR)/stack.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core
