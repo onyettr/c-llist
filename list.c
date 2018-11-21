@@ -626,6 +626,35 @@ int list_search(list_t *p, int value) {
  * @param[in] *p - list to reverse
  */
 void list_reverse ( list_t *p ) {
+  node_t *pCurrent = NULL;
+  node_t *pNext    = NULL;
+  node_t *pPrevious= NULL;
+
+  if (list_size(p) == 0) {
+    printf("list_reverse: Empty!\n");
+
+    /*    Thrower(e_empty); */
+    
+    return;
+  }
+
+  pCurrent = GetListHead(p);              /* Point to start of the list         */
+#if 0  
+  p->pTail = p->pHead;                    /* Swap the tail to point to the head */
+#endif  
+  printf("pCurrent %p\n",(void*)pCurrent);  
+  while ( pCurrent != NULL ) {
+    pNext = pCurrent->pNext;
+    printf("pNext %p\n", (void*)pNext);
+    pCurrent->pNext = pPrevious;
+    pPrevious = pCurrent;
+  printf("pCurrent->next %p\n",(void*)pCurrent->pNext);      
+    pCurrent = pNext;
+  printf("pCurrent %p\n",(void*)pCurrent);      
+  }
+
+  p->pHead = pPrevious;
+  printf("pHead %p\n",(void*)p->pHead);    
 }
 
 /**

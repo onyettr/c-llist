@@ -1,24 +1,10 @@
-/*
+/**
  *****************************************************************************
- * 
  * MODULE: C Programming Examples
  *
- * $Header: $
- * $Archive:$
- * 
- * $Workfile: $
- *
- * $Author: Onyettr $
- *
- * NAME: Richard Onyett 
- * EMAIL: 
+ * @author: onyettr 
  *
  * PURPOSE: Simple Stack implementation
- *
- * 
- * $Revision:$
- * $History: $
- *
  ***************************************************************************** 
  */
 
@@ -32,7 +18,7 @@ Includes
 #include "trap.h"
 
 /**
- * @fn    void Thrower(exception_t exp)
+ * @fn    void Thrower(exception_t exp)  
  * @brief exception handing
  * @param exp - exception type
  */
@@ -44,6 +30,8 @@ void Thrower(exception_t exp) {
     printf ("UnderFlowExcep");
   } else if (exp == e_outofmemory) {
     printf ("OutofMemoryExcep()");
+  } else if (exp == e_empty) {
+    printf("empty()");
   }
   
   printf("\n");

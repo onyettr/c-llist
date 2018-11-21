@@ -43,6 +43,7 @@ CODE_CHECK_ARGS	 = 	-showfunc -mustfreefresh -nullpass -nullret -noeffect
 # liblist library is built from trap handling and the list implementation. 
 #
 OBJS  		     = $(OBJECT_DIR)/main.o 		\
+		       $(OBJECT_DIR)/test_reverse.o	\
 		       $(OBJECT_DIR)/test_create.o	\
 		       $(OBJECT_DIR)/test_search.o	\
 		       $(OBJECT_DIR)/test_empty.o       \
@@ -96,10 +97,16 @@ $(OBJECT_DIR)/list.o:	list.c
 $(OBJECT_DIR)/trap.o:		trap.c
 	$(CC) $(CFLAGS) $(DEBUG) trap.c -o $(OBJECT_DIR)/trap.o
 
+$(OBJECT_DIR)/test_reverse.o:	test_reverse.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_reverse.c -o $(OBJECT_DIR)/test_reverse.o
+
+$(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_search.c -o $(OBJECT_DIR)/test_search.o
+
 $(OBJECT_DIR)/test_create.o:	test_create.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_create.c -o $(OBJECT_DIR)/test_create.o
 
-$(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
+(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_search.c -o $(OBJECT_DIR)/test_search.o
 
 $(OBJECT_DIR)/test_empty.o:	test_empty.c $(TEST_HDRS)
@@ -160,6 +167,7 @@ clean:
 	rm -f $(OBJECT_DIR)/trap.o
 	rm -f $(OBJECT_DIR)/list.o
 	rm -f $(OBJECT_DIR)/poortool.o
+	rm -f $(OBJECT_DIR)/test_reverse.o
 	rm -f $(OBJECT_DIR)/test_create.o
 	rm -f $(OBJECT_DIR)/test_search.o
 	rm -f $(OBJECT_DIR)/test_empty.o

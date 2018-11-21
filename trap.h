@@ -29,7 +29,8 @@ Private Types
 typedef enum exception {
   e_overflow    = 100,
   e_underflow   = 200,
-  e_outofmemory = 300
+  e_outofmemory = 300,
+  e_empty       = 400
 } exception_t;
 
 /*

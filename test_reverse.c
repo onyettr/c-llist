@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list reverse
+ * @file test_rev.c
  */
 
 /*
@@ -13,8 +10,7 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "poortool.h"
+#include "list.h"
 
 /*
 ******************************************************************************
@@ -51,11 +47,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,20 +54,54 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
+int test_reverse ( void )
+{
+  list_t *revTest1;
+  list_t *revTest2;
+  list_t *revTest3;
   
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-  (void)test_front();
-  (void)test_back();
-  (void)test_add();
-  (void)test_delete();
-  (void)test_search();
-  (void)test_reverse();
-#if 0 
-   poortool_init();
-#endif
+  // Sign on
+  printf("**** Linked List Test - list reverse\n");
+
+  /*
+   * Test01 - single element
+   */
+  printf("\tTest01 - rev single element\n");
+  revTest1 = list_create();
+  list_add_element(revTest1, 1);
+  printf("\tNumber in list before reverse = %d\n", list_size(revTest1));  
+  list_show(revTest1);  
+  list_reverse(revTest1);  
+  list_show(revTest1);
+
+  /*
+   * Test02 - mulitple elements
+   */
+  printf("\tTest02 - rev multiple element\n");
+  revTest2 = list_create();
+  list_add_element(revTest2, 1);
+  list_add_element(revTest2, 2);
+  list_add_element(revTest2, 3);
+  list_add_element(revTest2, 4);
+  list_add_element(revTest2, 5);      
+  printf("\tNumber in list before reverse = %d\n", list_size(revTest2));
+  list_show(revTest2);
+  list_reverse(revTest2);
+  list_show(revTest2);  
+
+  /*
+   * Test03 - no elements
+   */
+  printf("\tTest03 - rev zero element, exception to be thrown\n");
+  revTest3 = list_create();
+  list_reverse(revTest3);
+
+  printf("**** Linked List Test - reverse Ends\n");
   
-   return 0;
+  return 0;
 }
+
+//
+// Fin
+//
+  
