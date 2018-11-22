@@ -60,6 +60,40 @@ static node_t *NewNode(int value) {
 }
 
 /**
+ * @fn        list_t *GetListHead   (list_t *p)
+ *
+ * @brief     Return the head of the list
+ *
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Pointer to the Head or Null if empty
+ */
+node_t *GetListHead   (list_t *p) {
+   if (list_empty(p)) {
+     return (node_t *)NULL;
+   }
+
+   return p->pHead;
+}
+
+/**
+ * @fn        list_t *GetListTail   (list_t *p)
+ *
+ * @brief     Return the Tail of the List
+ *
+ * @param[in] *p   - Pointer to the list
+ *
+ * @return    Pointer to the Tail or NULL if empty
+ */
+node_t *GetListTail   (list_t *p) {
+   if (list_empty(p)) {
+     return (node_t *)NULL;
+   }
+
+   return p->pTail;
+}
+
+/**
  *  @fn     list_t *list_create(void)
  *
  *  @brief  Create a new list
@@ -392,39 +426,7 @@ bool list_empty (list_t *p) {
    return false;
 }
 
-/**
- * @fn        list_t *GetListHead   (list_t *p) 
- *
- * @brief     Return the head of the list
- * 
- * @param[in] *p   - Pointer to the list
- *
- * @return    Pointer to the Head or Null if empty
- */
-node_t *GetListHead   (list_t *p) {
-   if (list_empty(p)) {
-     return (node_t *)NULL;
-   }
 
-   return p->pHead;
-}
-
-/**
- * @fn        list_t *GetListTail   (list_t *p)
- *
- * @brief     Return the Tail of the List
- * 
- * @param[in] *p   - Pointer to the list
- *
- * @return    Pointer to the Tail or NULL if empty
- */
-node_t *GetListTail   (list_t *p) {
-   if (list_empty(p)) {
-     return (node_t *)NULL;
-   }
-
-   return p->pTail;
-}
 
 /**
  * @fn        int list_delete_element(list_t *p, int position) 
@@ -625,7 +627,7 @@ int list_search(list_t *p, int value) {
  * @brief     Reverse the contents of the list passed
  * @param[in] *p - list to reverse
  */
-void list_reverse ( list_t *p ) {
+int list_reverse ( list_t *p ) {
   node_t *pCurrent = NULL;
   node_t *pNext    = NULL;
   node_t *pPrevious= NULL;
@@ -633,28 +635,44 @@ void list_reverse ( list_t *p ) {
   if (list_size(p) == 0) {
     printf("list_reverse: Empty!\n");
 
-    /*    Thrower(e_empty); */
+    /* Thrower(e_empty); */
     
-    return;
+    return ERROR_LIST_EMPTY;
   }
 
+  /*
+   *     List_t                  node_t               node_t
+   *    pHead    ------------>   value                value
+   *    pTail    ------------>(1)pNext -->(3)Previous pNext ---> NULL
+   *                               ^                   ^ (2)
+   *                              pCurrent             pNext
+   *                                                   pNext (5)
+   * 1) pTail = pHead
+   * 2) pNext = pCurrent->pNext
+   * 3) pCurrent->pNext - pPrevious
+   * 4) pPrevious = pCurrent
+   * 5) pCurrent = pNext    This swaps
+   */
   pCurrent = GetListHead(p);              /* Point to start of the list         */
-#if 0  
+  // printf("pCurrent (Listhead) %p, Tail %p\n",(void *)pCurrent, (void*)p->pTail);
   p->pTail = p->pHead;                    /* Swap the tail to point to the head */
-#endif  
-  printf("pCurrent %p\n",(void*)pCurrent);  
+  // printf("pTail %p, pHead %p\n", (void*)p->pTail, (void*)p->pHead);
+
   while ( pCurrent != NULL ) {
     pNext = pCurrent->pNext;
-    printf("pNext %p\n", (void*)pNext);
+//  printf("pNext %p\n", (void*)pNext);
     pCurrent->pNext = pPrevious;
+//  printf("pCurrent->Next  %p\n", (void*)pCurrent->pNext);
     pPrevious = pCurrent;
-  printf("pCurrent->next %p\n",(void*)pCurrent->pNext);      
+//  printf("pCurrent->next %p\n",(void*)pCurrent->pNext);
     pCurrent = pNext;
-  printf("pCurrent %p\n",(void*)pCurrent);      
+//  printf("pCurrent %p\n",(void*)pCurrent);
   }
 
   p->pHead = pPrevious;
-  printf("pHead %p\n",(void*)p->pHead);    
+//  printf("pHead %p\n",(void*)p->pHead);
+
+  return SUCCESS;
 }
 
 /**

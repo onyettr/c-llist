@@ -160,3 +160,28 @@
      fail_unless(list_add_element(lp, 103) == 0, "add failure");
      fail_unless(list_delete_back(lp) == SUCCESS, "list_deletion failed");
      fail_unless(list_get_back(lp) == 102, "list_get_back: fail");     
+     
+# test list_reverse_negative_empty_list
+    list_t *lp = NULL;
+    lp = list_create();
+    fail_unless(list_reverse(lp) == -1, "reverse failure");
+    
+# test list_reverse_positive_one_element
+    list_t *lp = NULL;
+    lp = list_create();
+    list_add_element(lp, 1);
+    fail_unless(list_reverse(lp) == SUCCESS, "reverse fails");
+    
+# test list_reverse_positive_five_element
+    list_t *lp = NULL;
+    lp = list_create();   
+
+    list_add_element(lp, 1);
+    list_add_element(lp, 2);
+    list_add_element(lp, 3);
+    list_add_element(lp, 4);
+    list_add_element(lp, 5);      
+    list_show(lp);
+    fail_unless(list_reverse(lp) == 0, "reverse failure");
+    list_show(lp);  
+    

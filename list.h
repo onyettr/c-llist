@@ -94,7 +94,7 @@ int  list_add_element (list_t *p, int value);
 int  list_add_front   (list_t *p, int value);
 int  list_add_back    (list_t *p, int value);
 int  list_add_position(list_t *p, int position, int value);
-void list_reverse     (list_t *p);
+int  list_reverse     (list_t *p);
 void list_show        (list_t *p);
 int  list_get_position(list_t *p, int position); // return value at "position"
 int  list_get_front   (list_t *p);         // return value of first list element
