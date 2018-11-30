@@ -22,6 +22,7 @@ int test_front(void);
 int test_back (void);
 int test_delete(void);
 int test_search(void);
+int test_assign(void);
 int test_reverse(void);
 #endif
 

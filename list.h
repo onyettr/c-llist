@@ -82,6 +82,8 @@ Private Macros
 #define ERROR_LIST_EMPTY                -10
 #define ERROR_LIST_ALLOCATION_FAILED    -11
 #define ERROR_LIST_BAD_POSITION         -12
+#define ERROR_LIST_TOO_SMALL            -13
+#define ERROR_LIST_TOO_BIG              -14
 
 /*
 ******************************************************************************
@@ -89,26 +91,29 @@ Global variables
 ******************************************************************************
 */
 
-list_t *list_create(void);
-int  list_add_element (list_t *p, int value);
-int  list_add_front   (list_t *p, int value);
-int  list_add_back    (list_t *p, int value);
-int  list_add_position(list_t *p, int position, int value);
-int  list_reverse     (list_t *p);
-void list_show        (list_t *p);
-int  list_get_position(list_t *p, int position); // return value at "position"
-int  list_get_front   (list_t *p);         // return value of first list element
-int  list_get_back    (list_t *p);         // return value of tail list element
-int  list_delete      (list_t *p);         // Delete the list
-int  list_delete_element(list_t *p, int position); // Delete element  at position, decreases list size by 1
-int  list_delete_front(list_t *p);         // Delete element at the Front
-int  list_delete_back (list_t *p);         // Delete element at the Back
-void list_sort        (list_t *p);         // Sort the list
-int  list_size        (list_t *p);         // Number of elements in the list
-bool list_empty       (list_t *p);         // is the list empty?
-int  list_search      (list_t *p, int value); // Search list for value
-node_t *GetListHead   (list_t *p);         // Obtain Head iterator pointing to first element
-node_t *GetListTail   (list_t *p);        // Obtain Tail iterator pointing to last element
+list_t *list_create(void);                                  // Create a new list
+list_t *list_create_fixed(int n);                           // Create a new list of size n
+int  list_assign      (list_t *p, int n, int value);        // Assign (fill) n elements to value
+int  list_add_element (list_t *p, int value);               // Add an element to the list, increases list size by 1
+int  list_add_front   (list_t *p, int value);               // Add an element to the front of the list, increase list size by 1
+int  list_add_back    (list_t *p, int value);               // Add an element to the back  of the list, increase list size by 1
+int  list_add_position(list_t *p, int position, int value); // Add an element at position, increase list size by 1
+int  list_reverse     (list_t *p);                          // Reverse the contents of the list
+void list_show        (list_t *p);                          // Show the contents of the linked list
+int  list_get_position(list_t *p, int position);            // return value at "position"
+int  list_get_front   (list_t *p);                          // return value of first list element
+int  list_get_back    (list_t *p);                          // return value of tail list element
+int  list_delete      (list_t *p);                          // Delete the list
+int  list_delete_element(list_t *p, int position);          // Delete element  at position, decreases list size by 1
+int  list_delete_front(list_t *p);                          // Delete element at the Front
+int  list_delete_back (list_t *p);                          // Delete element at the Back
+int  list_clear       (list_t *p);                          // Delete all elements if list, size will be zero
+void list_sort        (list_t *p);                          // Sort the list
+int  list_size        (list_t *p);                          // Number of elements in the list
+bool list_empty       (list_t *p);                          // is the list empty?
+int  list_search      (list_t *p, int value);               // Search list for value
+node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
+node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
 
 #endif /* __LIST_H__ */
 

@@ -11,6 +11,12 @@
     lp = list_create();
     fail_unless(lp != NULL, "list create failed");   
 
+#test list_create_fixed_positive
+    list_t *lp;
+    lp = list_create_fixed(4);
+    fail_unless(lp != NULL, "list create fixed failed");
+    fail_unless(list_size(lp) == 4, "list create fixed failed");       
+
 #
 #tcase list_empty No elements
 #
@@ -113,6 +119,27 @@
     list_show       (lp);
     fail_unless(list_get_back(lp) == 111, "get back new back element list no failure");    
 
+#tcase list_get_position
+
+# test list_get_position_empty
+    list_t *lp;
+    lp = list_create();
+    fail_unless(list_get_position(lp,1) == ERROR_LIST_EMPTY, "get position empty fails");
+
+
+# test list_get_position_too_big
+    list_t *lp;
+    lp = list_create();
+    list_add_element(lp,201);
+    list_add_element(lp,301);
+    fail_unless(list_get_position(lp,5) == ERROR_LIST_BAD_POSITION, "get position bad fails");
+
+# test list_get_position_postive
+    list_t *lp;
+    lp = list_create();
+    list_add_element(lp,201);
+    list_add_element(lp,301);
+    fail_unless(list_get_position(lp,2) == 301, "get position fails");
 #
 #tcase list_deletion
 #
@@ -160,11 +187,15 @@
      fail_unless(list_add_element(lp, 103) == 0, "add failure");
      fail_unless(list_delete_back(lp) == SUCCESS, "list_deletion failed");
      fail_unless(list_get_back(lp) == 102, "list_get_back: fail");     
-     
+
+#
+#tcase list_reverse
+#
+
 # test list_reverse_negative_empty_list
     list_t *lp = NULL;
     lp = list_create();
-    fail_unless(list_reverse(lp) == -1, "reverse failure");
+    fail_unless(list_reverse(lp) == ERROR_LIST_EMPTY, "reverse failure");
     
 # test list_reverse_positive_one_element
     list_t *lp = NULL;
@@ -182,6 +213,38 @@
     list_add_element(lp, 4);
     list_add_element(lp, 5);      
     list_show(lp);
-    fail_unless(list_reverse(lp) == 0, "reverse failure");
+    fail_unless(list_reverse(lp) == SUCCESS, "reverse failure");
     list_show(lp);  
-    
+
+#
+#tcase list_assign
+#
+
+# test list_assign_empty_list
+  list_t *lp = NULL;
+  lp = list_create();
+
+  fail_unless(list_assign(lp,7,100) == ERROR_LIST_EMPTY, "assign failed");
+
+# test list_assign_too_small
+  list_t *lp = NULL;
+  lp = list_create();
+
+  list_add_element(lp,200);
+  fail_unless(list_assign(lp,7,100) == ERROR_LIST_TOO_SMALL, "assign too small failed");
+
+# test list_assign_positive
+  list_t *assignTest = NULL;
+  assignTest = list_create();
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);
+  list_add_element(assignTest,200);  
+  
+  fail_unless(list_assign(assignTest,7,100) == SUCCESS, "assign positive failure");
+  fail_unless(list_get_front(assignTest) == 100, "assign positive failure");  

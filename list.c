@@ -95,11 +95,8 @@ node_t *GetListTail   (list_t *p) {
 
 /**
  *  @fn     list_t *list_create(void)
- *
  *  @brief  Create a new list
- *
  *  @return NULL is failure
- *
  *  @note   create a list to whihc "elements" nodes are added. 
  */
 list_t *list_create(void) { /*@null@*/
@@ -119,6 +116,59 @@ list_t *list_create(void) { /*@null@*/
 #endif   
 
    return p; 
+}
+
+/**
+ *  @fn     list_t *list_create_fixed(int n)
+ *  @brief  Create a new list of n Elements
+ *  @return NULL is failure
+ *  @note   create a list of n (Elements) nodes are added. 
+ */
+list_t *list_create_fixed(int n) { /*@null@*/
+  list_t *p = (list_t*)NULL;
+  int i;
+#if defined(DEBUG_TRACE)
+   printf("list_create_fixed: called, elements = %d\n", n);
+#endif   
+
+   p = list_create();
+   if ( p != NULL ) {
+      for (i=0; i < n; i++) {
+       list_add_element(p, 0);
+      }
+   }
+
+   return p; 
+}
+
+/**
+ *  @fn     int list_assign(list_t *p, int n, int value)
+ *  @brief  assign (fill) n elements to value
+ *  @return SUCCESS or List empty, too small, too big
+ *  @note   
+ */
+int list_assign(list_t *p, int n, int value) {
+  node_t *pNode = (node_t*)NULL;
+  int i;
+#if defined(DEBUG_TRACE)
+   printf("list_assign: called, elements = %d\n", n);
+#endif   
+
+   if (list_empty(p)) {
+     return ERROR_LIST_EMPTY;
+   }
+
+   if (n > list_size(p)) {
+     return ERROR_LIST_TOO_SMALL;
+   }
+
+   pNode = GetListHead(p);
+   for (i=0; i < n; i++) {
+     pNode->value = value;
+     pNode = pNode->pNext;
+   }
+
+   return SUCCESS;
 }
 
 /**
@@ -319,6 +369,10 @@ int  list_get_position(list_t *p, int position) {
      return ERROR_LIST_EMPTY;
   }
 
+  if (position > list_size(p)) {
+     return ERROR_LIST_BAD_POSITION;
+  }
+  
   /*
    * Traverse the list until we get to position
    */

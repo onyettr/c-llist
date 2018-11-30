@@ -1,6 +1,6 @@
 * c-list tasks
 ** TODO Add sorting function
-** TODO Add list reverse
+** TODO add list_clear
 ** TODO Add list swap(2 nodes)
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO Add previous pointers to make doubly linked
@@ -10,6 +10,9 @@
 * Issues
 ** TODO list_delete_element for() loop assues we have elements
 * Completed
+** DONE add list_create_fixed(int size)
+** DONE add list_assign
+** DONE Add list reverse
 ** DONE Create the stack example using the list libary
 ** DONE Add test harness for search
 ** DONE Search should return a position not a node_t
