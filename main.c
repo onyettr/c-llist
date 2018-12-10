@@ -64,7 +64,7 @@ Prototypes of all functions contained in this file (in order of occurance)
 */
 
 int main ( void ) {
-  
+#if 0  
   (void)test_create();
   (void)test_empty();
   (void)test_size();
@@ -75,6 +75,8 @@ int main ( void ) {
   (void)test_search();
   (void)test_reverse();
   (void)test_assign();
+#endif
+  (void)test_remove();
 #if 0 
    poortool_init();
 #endif

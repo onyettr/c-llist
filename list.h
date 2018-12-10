@@ -107,11 +107,12 @@ int  list_delete      (list_t *p);                          // Delete the list
 int  list_delete_element(list_t *p, int position);          // Delete element  at position, decreases list size by 1
 int  list_delete_front(list_t *p);                          // Delete element at the Front
 int  list_delete_back (list_t *p);                          // Delete element at the Back
-int  list_clear       (list_t *p);                          // Delete all elements if list, size will be zero
+int  list_clear       (list_t *p);                          // Delete all elements in list, size will be zero
 void list_sort        (list_t *p);                          // Sort the list
 int  list_size        (list_t *p);                          // Number of elements in the list
 bool list_empty       (list_t *p);                          // is the list empty?
 int  list_search      (list_t *p, int value);               // Search list for value
+int  list_remove      (list_t *p, int value);               // Remove elements of 'value' from list
 node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
 node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
 

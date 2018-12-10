@@ -362,6 +362,10 @@ int  list_get_position(list_t *p, int position) {
   node_t *pCurrent;
   int value = 0;
   int i;
+
+#if defined(DEEP_TRACE)
+  printf("list_get_position: %d\n", position);
+#endif
   
   if (list_empty(p)) {
      printf("list_get_position - list is empty");
@@ -369,7 +373,9 @@ int  list_get_position(list_t *p, int position) {
      return ERROR_LIST_EMPTY;
   }
 
-  if (position > list_size(p)) {
+  if (position >= list_size(p)) {
+     printf("list_get_position: ERROR_LIST_BAD_POSITION\n");    
+
      return ERROR_LIST_BAD_POSITION;
   }
   
@@ -377,11 +383,15 @@ int  list_get_position(list_t *p, int position) {
    * Traverse the list until we get to position
    */
   pCurrent = GetListHead(p);  /* Start of the list */
-  for (i=1; i < position; i++) {
+  for (i=0; i < position; i++) {  
      pCurrent = pCurrent->pNext;
   }
 
   value = pCurrent->value;
+
+#if defined(DEEP_TRACE)  
+  printf("list_get_position: %d returns %d\n", position, value);
+#endif  
 
   return value;
 }
@@ -496,6 +506,10 @@ int list_delete_element(list_t *p, int position) {
   node_t *pCurrent;
   node_t *pPrevious;
 
+#if defined(DEEP_TRACE)
+  printf("list_delete_element: position = %d\n", position);
+#endif
+ 
   if (list_size(p) == 0) {
     return ERROR_LIST_EMPTY;
   }
@@ -518,9 +532,15 @@ int list_delete_element(list_t *p, int position) {
      for (i=0; i < position; i++) {
          pPrevious = pCurrent;
          pCurrent = pCurrent->pNext;
+	 //	 printf("list_delete_element: %d Curr %p, next %p\n",i,(void*)pPrevious, (void*)pCurrent);	 
       }
       pPrevious->pNext = pCurrent->pNext;    /* Previous entry is now pointing to one beyond the deleted entry */      
   }
+
+#if defined(DEEP_TRACE)
+  printf("list_delete_element: deleting %p\n", (void *)pCurrent);
+#endif
+  
   free(pCurrent);                            /* Delete the node                                                */
   p->NodeCount--;                            /* Decrement the node count                                       */
 
@@ -727,6 +747,47 @@ int list_reverse ( list_t *p ) {
 //  printf("pHead %p\n",(void*)p->pHead);
 
   return SUCCESS;
+}
+
+/**
+ * @fn        int list_remove(list_t *p, int value) 
+ * @brief     remove elements containing value
+ * @param[in] p     - the list
+ * @param[in] value - to remove
+ * @return    none
+ * @note
+ */
+int list_remove (list_t *p, int value) {
+    int position = 0;
+    node_t *pCurrent;
+
+#if defined(DEEP_TRACE)
+    printf("list_remove: Value %d\n", value);
+#endif
+    
+    /*
+     * List is empty?
+     */
+    if (list_size(p) == 0) {
+       return ERROR_LIST_EMPTY;
+    }
+
+    /*
+     * Scan the list for duplicates, if one is found, reset to the start and search again
+     */
+    pCurrent = GetListHead(p);
+    while (pCurrent) {
+      if ( list_get_position(p,position) == value ) {
+	list_delete_element(p,position);
+        pCurrent = GetListHead(p);
+	position = 0;
+      } else {
+	pCurrent = pCurrent->pNext;
+	position++;
+      }
+    }
+
+    return SUCCESS;
 }
 
 /**
