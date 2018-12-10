@@ -139,7 +139,7 @@
     lp = list_create();
     list_add_element(lp,201);
     list_add_element(lp,301);
-    fail_unless(list_get_position(lp,2) == 301, "get position fails");
+    fail_unless(list_get_position(lp,1) == 301, "get position fails");
 #
 #tcase list_deletion
 #
@@ -247,4 +247,91 @@
   list_add_element(assignTest,200);  
   
   fail_unless(list_assign(assignTest,7,100) == SUCCESS, "assign positive failure");
-  fail_unless(list_get_front(assignTest) == 100, "assign positive failure");  
+  fail_unless(list_get_front(assignTest) == 100, "assign positive failure");
+
+#tcase list_remove
+
+# test list_remove_empty_list
+  list_t *lp = NULL;
+  lp = list_create();
+
+  fail_unless(list_remove(lp,48) == ERROR_LIST_EMPTY, "assign failed");
+
+# test list_remove_one_element
+  list_t *rmTest = NULL;
+  rmTest = list_create();
+
+  list_add_element(rmTest,101);
+  list_add_element(rmTest,201);
+  list_add_element(rmTest,301);
+  fail_unless(list_remove(rmTest,201) == SUCCESS, "remove single element");
+  fail_unless(list_size(rmTest) == 2, "remove single element size");
+
+# test list_remove_two_elements
+  list_t *rmTest3 = NULL;
+  rmTest3 = list_create();
+
+  list_add_element(rmTest3,1001);
+  list_add_element(rmTest3,2001);
+  list_add_element(rmTest3,201);
+  list_add_element(rmTest3,201);
+  list_add_element(rmTest3,3001);
+  list_add_element(rmTest3,4001);
+  list_add_element(rmTest3,5001);
+  list_add_element(rmTest3,6001);
+  list_add_element(rmTest3,7001);  
+
+  fail_unless(list_remove(rmTest3,201) == SUCCESS, "remove two elements");
+  fail_unless(list_size(rmTest3) == 7, "remove two element size");  
+  
+# test list_remove_start_elements
+  list_t *rmTest4 = NULL;
+  rmTest4 = list_create();
+
+  list_add_element(rmTest4,201);  
+  list_add_element(rmTest4,1001);
+  list_add_element(rmTest4,3001);
+  
+  fail_unless(list_remove(rmTest4,201) == SUCCESS, "remove start element");
+  fail_unless(list_size(rmTest4) == 2, "remove start element size");
+  fail_unless(list_get_front(rmTest4) == 1001, "remove start get element");
+
+# test list_remove_back_elements
+  list_t *rmTest5 = NULL;
+  rmTest5 = list_create();
+
+  list_add_element(rmTest5,1001);
+  list_add_element(rmTest5,3001);
+  list_add_element(rmTest5,201);  
+  list_show(rmTest5);
+
+  fail_unless(list_remove(rmTest5,201) == SUCCESS, "remove end element");
+  fail_unless(list_size(rmTest5) == 2, "remove end element size");
+  fail_unless(list_get_back(rmTest5) == 3001, "remove end get element");
+
+# test list_remove_numerous_elements
+  list_t *rmTest6 = NULL;
+  rmTest6 = list_create();
+
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);    
+  list_add_element(rmTest6,1001);
+  list_add_element(rmTest6,2001);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);    
+  list_add_element(rmTest6,3001);
+
+  fail_unless(list_remove(rmTest6,201) == SUCCESS, "remove numerous elements");
+  fail_unless(list_size(rmTest6) == 3, "remove numerous element size");  
+  fail_unless(list_get_front(rmTest6) == 1001, "remove numerous get element");
+
+
+
+
+
+  
