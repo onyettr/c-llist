@@ -1,8 +1,13 @@
 * c-list tasks
 ** TODO Add sorting function
+** TODO add iterators for the list
 ** TODO add list_clear
+** TODO list_pop_back to add
+** TODO list_pop_front to add
+** TODO list_remoove_if to add
 ** TODO Add list swap(2 nodes)
 ** TODO Add sbrk() and ensure all allocated memory is put back
+** TODO take differing types?
 ** TODO Add previous pointers to make doubly linked
 ** TODO Add better dump tool e.g. ascii art?
 ** TODO poortool.c - make it accept UP, DOWN history commands

@@ -308,7 +308,7 @@ static void tt_list_destroy (int argc, char *argv[]) {
     Eval(argv[0], &Handle);
 
     if ( list_base[Handle] != NULL) {
-      list_delete (list_base[Handle]);
+      list_clear (list_base[Handle]);
       list_handles[Handle] = 0;   /* Mark handle as being free */      
     } else {
       printf("No list found\n");      

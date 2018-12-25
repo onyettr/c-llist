@@ -27,7 +27,6 @@ static node_t *NewNode(int value);
 
 /**
  * @fn      static int isEmpty(stack_t *pStack) - test if list isEmpty
- *
  * @brief   check if list is Empty
  * @param   *p  - the list
  * @return  Returns "true" or "false"
@@ -61,11 +60,8 @@ static node_t *NewNode(int value) {
 
 /**
  * @fn        list_t *GetListHead   (list_t *p)
- *
  * @brief     Return the head of the list
- *
  * @param[in] *p   - Pointer to the list
- *
  * @return    Pointer to the Head or Null if empty
  */
 node_t *GetListHead   (list_t *p) {
@@ -78,11 +74,8 @@ node_t *GetListHead   (list_t *p) {
 
 /**
  * @fn        list_t *GetListTail   (list_t *p)
- *
  * @brief     Return the Tail of the List
- *
  * @param[in] *p   - Pointer to the list
- *
  * @return    Pointer to the Tail or NULL if empty
  */
 node_t *GetListTail   (list_t *p) {
@@ -173,12 +166,9 @@ int list_assign(list_t *p, int n, int value) {
 
 /**
  * @fn        void list_add_element ( list_t *p, int value ) 
- *
  * @brief     This adds a node to the end of the list
- *
  * @param[in] *p         Pointer to the list to add to 
  * @param[in] value      Value of element
- *
  * @return    = if ok, -1 is we have a malloc fail. 
  */
 int list_add_element ( list_t *p, int value ) {
@@ -221,15 +211,11 @@ int list_add_element ( list_t *p, int value ) {
 }
 
 /**
- *
  * @fn        int list_add_front ( list_t *p, int value ) 
- *
  * @brief     Adds a node to the front of the list
- * 
  * @param[in] *p    - Pointer to the list
  * @param[in] value -  to add
- *
- * @return    0 (SUCCESS)
+ * @return    0 (SUCCESS
  */
 int list_add_front ( list_t *p, int value ) {
    node_t *pNode = NULL; 
@@ -269,12 +255,9 @@ int list_add_front ( list_t *p, int value ) {
 
 /**
  * @fn        int list_add_back ( list_t *p, int value ) 
- *
  * @brief     Adds a node to the back of the list
- * 
  * @param[in] *p    - Pointer to the list
  * @param[in] value - to add
- *
  * @return    none
  */
 int list_add_back ( list_t *p, int value ) {
@@ -296,13 +279,10 @@ int list_add_back ( list_t *p, int value ) {
 
 /**
  * @fn        void list_add_position( list_t *p, int position, int value)
- *
  * @brief     Adds a node to a list at 'Position'
- * 
  * @param[in] *p       - Pointer to the list
  * @param[in] position - place to add
  * @param[in] value    - to add
- *
  * @return    none
  */
 int list_add_position( list_t *p, int position, int value ) {
@@ -350,12 +330,9 @@ int list_add_position( list_t *p, int position, int value ) {
 
 /**
  * @fn        int  list_get_position(list_t *p, int position) 
- *
  * @brief     Return an element value given a position in the list
- * 
  * @param[in] *p   - Pointer to the list
  * @param[in] position of element in the list
- *
  * @return    int  - Value at the list position or -1 if empty
  */
 int  list_get_position(list_t *p, int position) {
@@ -398,11 +375,8 @@ int  list_get_position(list_t *p, int position) {
 
 /**
  * @fn        int  list_get_front   (list_t *p)
- *
  * @brief     Return the value at the front of the list
- * 
  * @param[in] *p   - Pointer to the list
- *
  * @return    Value at Front or -1 if empty
  */
 int  list_get_front   (list_t *p) {
@@ -422,11 +396,8 @@ int  list_get_front   (list_t *p) {
 
 /**
  * @fn        int  list_get_back    (list_t *p)
- *
  * @brief     return the value at the back of the list
- * 
  * @param[in] *p   - Pointer to the list
- *
  * @return    value
  */
 int  list_get_back    (list_t *p) {
@@ -446,11 +417,8 @@ int  list_get_back    (list_t *p) {
 
 /**
  * @fn        int  list_size (list_t *p) 
- *
  * @brief     Returns the size or number of nodes in a list
- * 
  * @param[in] *p   - Pointer to the list
- *
  * @return    Size of the list
  */
 int  list_size (list_t *p) {
@@ -470,11 +438,8 @@ int  list_size (list_t *p) {
 
 /**
  * @fn        bool list_empty       (list_t *p)
- *
  * @brief     Test is the list is empty
- * 
  * @param[in] *p   - Pointer to the list
- *
  * @return    TRUE if empty, FALSE if not
  * @note      Also tests if the list has been created. 
  */
@@ -490,16 +455,12 @@ bool list_empty (list_t *p) {
    return false;
 }
 
-
-
 /**
  * @fn        int list_delete_element(list_t *p, int position) 
  * @brief     delete a given element at 'position'
- *
  * @param[in] *p    Pointer to the list to delete
  * @param[in] position in the list
  * @return    none
- *
  * @note      
  */
 int list_delete_element(list_t *p, int position) {
@@ -550,9 +511,7 @@ int list_delete_element(list_t *p, int position) {
 /**
  * @fn        int list_delete_front(list_t *p)
  * @brief     delete the Front element
- *
  * @param[in] *p    Pointer to the list to delete the element
- *
  * @note      
  */
 int list_delete_front(list_t *p) {
@@ -566,9 +525,8 @@ int list_delete_front(list_t *p) {
 /**
  * @fn        int list_delete_back(list_t *p) 
  * @brief     delete the Back element
- *
  * @param[in] *p    Pointer to the list to delete
- *
+ * @return    SUCCESS or ERROR_LOST_EMPTY
  * @note      
  */
 int list_delete_back(list_t *p) {
@@ -614,25 +572,22 @@ int list_delete_back(list_t *p) {
 }
 
 /**
- * @fn        int list_delete ( list_t *p ) - delete a complete list
+ * @fn        int list_clear ( list_t *p ) - delete a complete list
  * @brief     delete a given list plus any associated nodes. 
- *
  * @param[in] *p    Pointer to the list to delete
- *
  * @return    int 0 for succcess, -1 if fail
- *
  * @note      This will scan the whole list of nodes and delete the nodes 
  *            before deleting the list_p itself. 
  */
-int list_delete ( list_t *p ) {
+int list_clear ( list_t *p ) {
     node_t *pNode = NULL;  
     node_t *pNext = NULL;
 
-    if ( p == NULL ) {
+    if ( p == NULL || list_size(p) == 0 ) {
        return ERROR_LIST_EMPTY;
     }
 
-    pNode = p->pHead;        /* Point at first node  */
+    pNode = p->pHead;         /* Point at first node  */
     while ( pNode ) {
        pNext = pNode->pNext;  /* Pick up the next one */
 
@@ -700,6 +655,7 @@ int list_search(list_t *p, int value) {
  * @fn        void list_reverse ( list_t *p )
  * @brief     Reverse the contents of the list passed
  * @param[in] *p - list to reverse
+ * @return    ERROR_LIST_EMPTY, SUCCESS
  */
 int list_reverse ( list_t *p ) {
   node_t *pCurrent = NULL;

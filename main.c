@@ -75,8 +75,9 @@ int main ( void ) {
   (void)test_search();
   (void)test_reverse();
   (void)test_assign();
-#endif
   (void)test_remove();
+#endif
+  (void)test_clear();
 #if 0 
    poortool_init();
 #endif

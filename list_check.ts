@@ -141,21 +141,22 @@
     list_add_element(lp,301);
     fail_unless(list_get_position(lp,1) == 301, "get position fails");
 #
-#tcase list_deletion
+#tcase list_clear
 #
 
-# test list_delete_negative_list_empty
+# test list_clear_negative_list_empty
      list_t *lp;
      lp = NULL;
-     fail_unless(list_delete(lp) == ERROR_LIST_EMPTY, "list deletion: list is empty (NULL)");
+     fail_unless(list_clear(lp) == ERROR_LIST_EMPTY, "list clear: list is empty (NULL)");
 
-# test list_delete_postitve_list_populated
+# test list_clear_postitve_list_populated
      list_t *lp = NULL;
      lp = list_create();
      fail_unless(lp != NULL, "list create failed");
      fail_unless(list_add_element(lp, 101) == 0, "add no failure");
-     fail_unless(list_delete(lp) == 0, "list deletion: ok");
-
+     fail_unless(list_clear(lp) == 0, "list clear: ok");
+     fail_unless(list_size(lp) == 0,  "list clear: size ok");
+     
 # test list_delete_front_positive
      list_t *lp = NULL;
      lp = list_create();

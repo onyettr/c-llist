@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   test_create.c
- * @brief  Test harness for List creation
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list delete operations
+ * @file test_del.c
  */
 
 /*
@@ -14,7 +11,6 @@ Includes
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
-#include "test.h"
 
 /*
 ******************************************************************************
@@ -39,7 +35,6 @@ Private variables (static)
 Private Macros
 ******************************************************************************
 */
-#define DIM(X) (int)(sizeof((X))/sizeof(int))
 
 /*
 ******************************************************************************
@@ -59,29 +54,35 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int test_create ( void ) {
-  list_t *p  = NULL;
-  list_t *p2 = NULL;
+int test_clear ( void )
+{
+  list_t *delTest;
   
-  printf("**** Linked List Test - create Starts\n");  
+  // Sign on
+  printf("**** Linked List Class Test Template - clear\n");
 
-  p = list_create();
+  /*
+   * create a new list
+   */ 
+  delTest = list_create();
 
-  printf("[%p] List created\n", (void*)p);
-  list_show(p);
-
-  p2 = list_create_fixed(4);
-  printf("\tTest01a - Create fixed size list (4) = %d\n", list_size(p2));    
-
-  list_clear(p);
-  list_clear(p2);
+  printf("\tTest01 - clear empty list,error = %d\n", list_clear(delTest));    
   
-  printf("**** Linked List Test - create Ends\n");
+  /*
+   * Add an element
+   */
+  printf("\tTest02 - clear list\n");      
+  list_add_element(delTest, 302);
+  list_add_element(delTest, 403);
+  list_add_element(delTest, 504);
+  list_add_element(delTest, 605);  
+  printf("\tNumber in list before clear (4) = %d\n",list_size(delTest));
+  list_show(delTest);
+
+  list_clear(delTest);
+  printf("\tNumber in list after clear (0) = %d\n",list_size(delTest));
+
+  printf("**** Linked List Test Template - clear Ends\n");
   
   return 0;
 }
-
-/*
- Fin
-*/
-  
