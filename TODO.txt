@@ -1,10 +1,8 @@
 * c-list tasks
 ** TODO Add sorting function
 ** TODO add iterators for the list
-** TODO add list_clear
 ** TODO list_pop_back to add
 ** TODO list_pop_front to add
-** TODO list_remove_if to add
 ** TODO Add list swap(2 nodes)
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO take differing types?
@@ -17,6 +15,8 @@
 ** TODO list_remove if value is last, Tail is not updated correctly
 ** TODO list_remove_if if value is last, Tail is not updated correctly
 * Completed
+** DONE add list_clear
+** DONE list_remove_if to add
 ** DONE add list_create_fixed(int size)
 ** DONE add list_assign
 ** DONE Add list reverse
