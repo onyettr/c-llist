@@ -707,7 +707,7 @@ int list_reverse ( list_t *p ) {
 
 /**
  * @fn        int list_remove(list_t *p, int value) 
- * @brief     remove elements containing value
+ * @brief     remove elements containing duplicate value
  * @param[in] p     - the list
  * @param[in] value - to remove
  * @return    none
@@ -734,6 +734,54 @@ int list_remove (list_t *p, int value) {
     pCurrent = GetListHead(p);
     while (pCurrent) {
       if ( list_get_position(p,position) == value ) {
+	list_delete_element(p,position);
+        pCurrent = GetListHead(p);
+	position = 0;
+      } else {
+	pCurrent = pCurrent->pNext;
+	position++;
+      }
+    }
+
+    return SUCCESS;
+}
+
+/**
+ * @fn        int list_remove_if(list_t *p, bool (*predFun)(int value))) 
+ * @brief     remove elements based on predFunc == true
+ * @param[in] p     - the list
+ * @param[in] (*predFunc)
+ * @return    none
+ * @note
+ */
+int list_remove_if (list_t *p, bool (*predFunc)(int value)) {
+    int position = 0;
+    node_t *pCurrent;
+
+#if defined(DEEP_TRACE)
+    printf("list_remove: Value %d\n", value);
+#endif
+    
+    /*
+     * List is empty?
+     */
+    if (list_size(p) == 0) {
+       return ERROR_LIST_EMPTY;
+    }
+
+    if (predFunc == NULL) {
+      return ERROR_LIST_EMPTY;
+    }
+
+    /*
+     * Scan the list for duplicates, if one is found, reset to the start and search again
+     */
+    pCurrent = GetListHead(p);
+    while (pCurrent) {
+      int item;
+
+      item = list_get_position(p,position);
+      if ( predFunc(item) ) {
 	list_delete_element(p,position);
         pCurrent = GetListHead(p);
 	position = 0;

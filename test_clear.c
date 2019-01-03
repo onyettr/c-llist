@@ -59,14 +59,14 @@ int test_clear ( void )
   list_t *delTest;
   
   // Sign on
-  printf("**** Linked List Class Test Template - clear\n");
+  printf("**** Linked List Test Template - clear\n");
 
   /*
    * create a new list
    */ 
   delTest = list_create();
 
-  printf("\tTest01 - clear empty list,error = %d\n", list_clear(delTest));    
+  printf("\tTest01 - clear empty list,error -10 = %d\n", list_clear(delTest));    
   
   /*
    * Add an element

@@ -48,6 +48,7 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/test_search.o	\
 		       $(OBJECT_DIR)/test_assign.o      \
 		       $(OBJECT_DIR)/test_remove.o      \
+		       $(OBJECT_DIR)/test_remove_if.o   \
 		       $(OBJECT_DIR)/test_empty.o       \
 		       $(OBJECT_DIR)/test_front.o      	\
 		       $(OBJECT_DIR)/test_clear.o       \
@@ -111,6 +112,9 @@ $(OBJECT_DIR)/test_assign.o:	test_assign.c $(TEST_HDRS)
 
 $(OBJECT_DIR)/test_remove.o:	test_remove.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_remove.c -o $(OBJECT_DIR)/test_remove.o
+
+$(OBJECT_DIR)/test_remove_if.o:	test_remove_if.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_remove_if.c -o $(OBJECT_DIR)/test_remove_if.o
 
 $(OBJECT_DIR)/test_create.o:	test_create.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_create.c -o $(OBJECT_DIR)/test_create.o
@@ -184,6 +188,7 @@ clean:
 	rm -f $(OBJECT_DIR)/test_search.o
 	rm -f $(OBJECT_DIR)/test_assign.o
 	rm -f $(OBJECT_DIR)/test_remove.o
+	rm -f $(OBJECT_DIR)/test_remove_if.o
 	rm -f $(OBJECT_DIR)/test_empty.o
 	rm -f $(OBJECT_DIR)/test_clear.o
 	rm -f $(OBJECT_DIR)/test_front.o

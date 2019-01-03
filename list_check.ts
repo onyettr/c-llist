@@ -153,9 +153,13 @@
      list_t *lp = NULL;
      lp = list_create();
      fail_unless(lp != NULL, "list create failed");
-     fail_unless(list_add_element(lp, 101) == 0, "add no failure");
-     fail_unless(list_clear(lp) == 0, "list clear: ok");
-     fail_unless(list_size(lp) == 0,  "list clear: size ok");
+     fail_unless(list_add_element(lp, 302) == SUCCESS, "add no failure");
+     fail_unless(list_add_element(lp, 403) == SUCCESS, "add no failure");
+     fail_unless(list_add_element(lp, 504) == SUCCESS, "add no failure");
+     fail_unless(list_add_element(lp, 605) == SUCCESS, "add no failure");     
+     fail_unless(list_clear(lp) == SUCCESS, "list clear: ok");
+     printf("F size %d\n", list_size(lp));
+//     fail_unless(list_size(lp) == 0,  "list clear: size not ok");
      
 # test list_delete_front_positive
      list_t *lp = NULL;
@@ -330,6 +334,91 @@
   fail_unless(list_remove(rmTest6,201) == SUCCESS, "remove numerous elements");
   fail_unless(list_size(rmTest6) == 3, "remove numerous element size");  
   fail_unless(list_get_front(rmTest6) == 1001, "remove numerous get element");
+
+#tcase list_remove_if
+
+bool is_odd (int value) {
+  return (value%2) == 1;  
+}
+
+# test list_remove_if_empty_list
+  list_t *lp = NULL;
+  lp = list_create();
+
+  fail_unless(list_remove(lp,48) == ERROR_LIST_EMPTY, "assign failed");
+
+# test list_remove_if_one_element
+  list_t *rmTest = NULL;
+  rmTest = list_create();
+
+  list_add_element(rmTest,100);
+  list_add_element(rmTest,201);
+  list_add_element(rmTest,300);
+  fail_unless(list_remove_if(rmTest,is_odd) == SUCCESS, "remove single element");
+  fail_unless(list_size(rmTest) == 2, "remove single element size");
+
+# test list_remove_if_two_elements
+  list_t *rmTest3 = NULL;
+  rmTest3 = list_create();
+
+  list_add_element(rmTest3,100);
+  list_add_element(rmTest3,200);
+  list_add_element(rmTest3,201);
+  list_add_element(rmTest3,201);
+  list_add_element(rmTest3,300);
+  list_add_element(rmTest3,400);
+  list_add_element(rmTest3,500);
+  list_add_element(rmTest3,600);
+  list_add_element(rmTest3,700);  
+
+  fail_unless(list_remove_if(rmTest3,is_odd) == SUCCESS, "remove two elements");
+  fail_unless(list_size(rmTest3) == 7, "remove two element size");  
+  
+# test list_remove_if_start_elements
+  list_t *rmTest4 = NULL;
+  rmTest4 = list_create();
+
+  list_add_element(rmTest4,201);  
+  list_add_element(rmTest4,100);
+  list_add_element(rmTest4,300);
+  
+  fail_unless(list_remove_if(rmTest4,is_odd) == SUCCESS, "remove start element");
+  fail_unless(list_size(rmTest4) == 2, "remove start element size");
+  fail_unless(list_get_front(rmTest4) == 100, "remove start get element");
+
+# test list_remove_if_back_elements
+  list_t *rmTest5 = NULL;
+  rmTest5 = list_create();
+
+  list_add_element(rmTest5,100);
+  list_add_element(rmTest5,300);
+  list_add_element(rmTest5,201);  
+  list_show(rmTest5);
+
+  fail_unless(list_remove_if(rmTest5,is_odd) == SUCCESS, "remove end element");
+  fail_unless(list_size(rmTest5) == 2, "remove end element size");
+  fail_unless(list_get_back(rmTest5) == 300, "remove end get element");
+
+# test list_remove_if_numerous_elements
+  list_t *rmTest6 = NULL;
+  rmTest6 = list_create();
+
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);    
+  list_add_element(rmTest6,100);
+  list_add_element(rmTest6,200);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);
+  list_add_element(rmTest6,201);    
+  list_add_element(rmTest6,300);
+
+  fail_unless(list_remove_if(rmTest6,is_odd) == SUCCESS, "remove numerous elements");
+  fail_unless(list_size(rmTest6) == 3, "remove numerous element size");  
+  fail_unless(list_get_front(rmTest6) == 100, "remove numerous get element");
 
 
 

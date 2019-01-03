@@ -112,6 +112,7 @@ bool list_empty       (list_t *p);                          // is the list empty
 int  list_clear       (list_t *p);                          // Remove all list elements 
 int  list_search      (list_t *p, int value);               // Search list for value
 int  list_remove      (list_t *p, int value);               // Remove elements of 'value' from list
+int  list_remove_if   (list_t *p, bool (*predFunc)(int value)); // Remove elements if predFunc is true from list
 node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
 node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
 
