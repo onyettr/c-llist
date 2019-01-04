@@ -80,12 +80,12 @@ int test_add ( void )
   printf("\tTest01b - size of list %d\n", list_size(addTest));
 
   printf("\tTest02a - add to front\n");  
-  list_add_front(addTest, 111);
+  list_push_front(addTest, 111);
   list_show(addTest);
   printf("\tTest02a - size of list %d\n", list_size(addTest));
 
   printf("\tTest03a - add to back\n");;  
-  list_add_back(addTest, 222);
+  list_push_back(addTest, 222);
   list_show(addTest);
   printf("\tTest03a - size of list %d\n", list_size(addTest));
 

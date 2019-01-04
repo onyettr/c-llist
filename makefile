@@ -57,7 +57,7 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/test_add.o       	\
 		       $(OBJECT_DIR)/test_del.o       	\
 		       $(OBJECT_DIR)/trap.o		\
-		       $(OBJECT_DIR)/poortool.o 
+#		       $(OBJECT_DIR)/poortool.o 
 
 STACK_OBJ	     = $(OBJECT_DIR)/stack.o
 

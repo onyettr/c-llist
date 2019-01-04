@@ -83,7 +83,7 @@ int test_front (void)
   printf("\tReturn (200) = %d\n", list_get_front(addTest));
 
   printf("\tTest04 - return front, list has new front element\n");
-  list_add_front(addTest,111);
+  list_push_front(addTest,111);
   printf("\tReturn (111) = %d\n", list_get_front(addTest));
 
   list_show(addTest);

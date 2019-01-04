@@ -61,6 +61,34 @@
     fail_unless(list_add_element(lp, 101) == 0, "add no failure");
 
 #
+#tcase list_push
+#
+
+#test list_push_front_positive
+    list_t *lp;
+    lp = list_create();
+    fail_unless(lp != NULL, "positive create failed");   
+
+    fail_unless(list_push_front(lp, 101) == 0, "add no failure");
+    fail_unless(list_get_front(lp) == 101, "push front failure");
+
+#test list_push_back_positive
+    list_t *lp;
+    lp = list_create();
+    fail_unless(lp != NULL, "positive create failed");  
+    list_add_element(lp,201);
+    list_add_element(lp,301);    
+    fail_unless(list_push_back(lp, 111) == 0, "add no failure");
+    fail_unless(list_get_back(lp) == 111, "push back failure");
+
+#test list_push_back_positive_empty
+    list_t *lp;
+    lp = list_create();
+    fail_unless(lp != NULL, "positive create failed");  
+    fail_unless(list_push_back(lp, 111) == 0, "add no failure");
+    fail_unless(list_get_back(lp) == 111, "push back failure");
+
+#
 #tcase list_get_front
 #
 #test list_get_front_empty_list
@@ -86,7 +114,7 @@
     lp = list_create();
     list_add_element(lp,200);
     list_add_element(lp,300);
-    list_add_front(lp,111);    
+    list_push_front(lp,111);    
     fail_unless(list_get_front(lp) == 111, "get front new front element list no failure");    
 
 #
@@ -115,7 +143,7 @@
     lp = list_create();
     list_add_element(lp,201);
     list_add_element(lp,301);
-    list_add_back   (lp,111);
+    list_push_back  (lp,111);
     list_show       (lp);
     fail_unless(list_get_back(lp) == 111, "get back new back element list no failure");    
 
@@ -158,7 +186,6 @@
      fail_unless(list_add_element(lp, 504) == SUCCESS, "add no failure");
      fail_unless(list_add_element(lp, 605) == SUCCESS, "add no failure");     
      fail_unless(list_clear(lp) == SUCCESS, "list clear: ok");
-     printf("F size %d\n", list_size(lp));
 //     fail_unless(list_size(lp) == 0,  "list clear: size not ok");
      
 # test list_delete_front_positive

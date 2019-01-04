@@ -57,14 +57,16 @@ Prototypes of all functions contained in this file (in order of occurance)
 int test_back (void)
 {
   list_t *addTest;
+  list_t *addTest2;
   
   // Sign on
-  printf("**** Linked List Test - back\n");
+  printf("**** Linked List Test - push back\n");
 
   /*
    * create a new list
    */ 
   addTest = list_create();
+  addTest2= list_create();
   
   /*
    * Add an element
@@ -81,11 +83,17 @@ int test_back (void)
   printf("\tReturn (301) = %d\n", list_get_back(addTest));
 
   printf("\tTest04 - return back, list has new back element\n"); 
-  list_add_back(addTest,111);
+  list_push_back(addTest,111);
   printf("\tReturn (111) = %d\n", list_get_back(addTest));  
 
   list_show(addTest);
 
+  printf("\tTest05 - push back, list has is empty\n"); 
+  list_push_back(addTest2,111);
+  printf("\tReturn (111) = %d\n", list_get_back(addTest2));  
+
+  list_show(addTest2);
+  
   printf("**** Linked List Class Test - back Ends\n");
   
   return 0;

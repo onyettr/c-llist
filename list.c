@@ -211,13 +211,13 @@ int list_add_element ( list_t *p, int value ) {
 }
 
 /**
- * @fn        int list_add_front ( list_t *p, int value ) 
+ * @fn        int list_push_front ( list_t *p, int value ) 
  * @brief     Adds a node to the front of the list
  * @param[in] *p    - Pointer to the list
  * @param[in] value -  to add
  * @return    0 (SUCCESS
  */
-int list_add_front ( list_t *p, int value ) {
+int list_push_front ( list_t *p, int value ) {
    node_t *pNode = NULL; 
    node_t *pHold = NULL;
   
@@ -226,7 +226,7 @@ int list_add_front ( list_t *p, int value ) {
     */
    pNode = NewNode(value);
    if ( pNode == NULL ) {
-      printf("list_add_front: failed to create a new node\n");
+      printf("list_push_front: failed to create a new node\n");
 
      return ERROR_LIST_ALLOCATION_FAILED;
    }
@@ -240,7 +240,7 @@ int list_add_front ( list_t *p, int value ) {
       pNode->pNext = NULL;
 
 #if defined (DEEP_TRACE)      
-      printf("list_add_front: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+      printf("list_push_front: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
 #endif      
    } else {
       pHold = p->pHead;      /* Save off the head of the list                   */
@@ -254,13 +254,13 @@ int list_add_front ( list_t *p, int value ) {
 }
 
 /**
- * @fn        int list_add_back ( list_t *p, int value ) 
+ * @fn        int list_push_back ( list_t *p, int value ) 
  * @brief     Adds a node to the back of the list
  * @param[in] *p    - Pointer to the list
  * @param[in] value - to add
  * @return    none
  */
-int list_add_back ( list_t *p, int value ) {
+int list_push_back ( list_t *p, int value ) {
    node_t *pTemp = NULL; 
    node_t *pCurrentTail;
    
@@ -269,8 +269,17 @@ int list_add_back ( list_t *p, int value ) {
     */
    pTemp = NewNode(value);
    pCurrentTail = GetListTail(p);  /* Get the current Tail element                   */
-   pCurrentTail->pNext = pTemp;    /* Current Tail points to the new element created */
-   p->pTail = pTemp;               /* Advances the Tail to the new Tail elemenet     */
+
+   if(pCurrentTail == NULL) {
+     /*
+      * We are now back (and front!)
+      */
+     p->pTail = pTemp;
+     p->pHead = pTemp;
+   } else {
+     pCurrentTail->pNext = pTemp;    /* Current Tail points to the new element created */
+     p->pTail = pTemp;               /* Advances the Tail to the new Tail elemenet     */
+   }
 
    p->NodeCount++;                 /* Increase the number of nodes                   */
 
@@ -298,7 +307,7 @@ int list_add_position( list_t *p, int position, int value ) {
    }
 
    if (position == 0) {
-     list_add_front(p,value);
+     list_push_front(p,value);
 
      return SUCCESS;
    }
@@ -510,7 +519,7 @@ int list_delete_element(list_t *p, int position) {
 
 /**
  * @fn        int list_delete_front(list_t *p)
- * @brief     delete the Front element
+ * @brief     delete the Front element 
  * @param[in] *p    Pointer to the list to delete the element
  * @note      
  */

@@ -95,8 +95,8 @@ list_t *list_create(void);                                  // Create a new list
 list_t *list_create_fixed(int n);                           // Create a new list of size n
 int  list_assign      (list_t *p, int n, int value);        // Assign (fill) n elements to value
 int  list_add_element (list_t *p, int value);               // Add an element to the list, increases list size by 1
-int  list_add_front   (list_t *p, int value);               // Add an element to the front of the list, increase list size by 1
-int  list_add_back    (list_t *p, int value);               // Add an element to the back  of the list, increase list size by 1
+int  list_push_front  (list_t *p, int value);               // Add an element to the front of the list, increase list size by 1
+int  list_push_back   (list_t *p, int value);               // Add an element to the back  of the list, increase list size by 1
 int  list_add_position(list_t *p, int position, int value); // Add an element at position, increase list size by 1
 int  list_reverse     (list_t *p);                          // Reverse the contents of the list
 void list_show        (list_t *p);                          // Show the contents of the linked list

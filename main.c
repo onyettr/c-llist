@@ -75,11 +75,12 @@ int main ( void ) {
   (void)test_search();
   (void)test_reverse();
   (void)test_assign();
-
+  (void)test_remove();
   (void)test_remove_if();  
   (void)test_clear();  
 #endif
-  (void)test_remove();
+  (void)test_front();
+  (void)test_back();
 #if 0 
    poortool_init();
 #endif
