@@ -1,20 +1,22 @@
 * c-list tasks
 ** TODO Add sorting function
 ** TODO add iterators for the list
-** TODO list_pop_back to add
-** TODO list_pop_front to add
 ** TODO Add list swap(2 nodes)
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO take differing types?
+** TODO Rename list_delete_front/back to list_pop_front/back
 ** TODO Add previous pointers to make doubly linked
 ** TODO Add better dump tool e.g. ascii art?
 ** TODO poortool.c - make it accept UP, DOWN history commands
 ** TODO Fake throw ?
 * Issues
-** TODO list_delete_element for() loop assues we have elements
-** TODO list_remove if value is last, Tail is not updated correctly
-** TODO list_remove_if if value is last, Tail is not updated correctly
+** TODO [BUG] list_push_back on empty list causes seg fault
+** TODO [BUG] list_delete_element for() loop assues we have elements
+** TODO [BUG] list_remove if value is last, Tail is not updated correctly
+** TODO [BUG] list_remove_if if value is last, Tail is not updated correctly
 * Completed
+** DONE list_pop_back to add
+** DONE list_pop_front to add
 ** DONE add list_clear
 ** DONE list_remove_if to add
 ** DONE add list_create_fixed(int size)
