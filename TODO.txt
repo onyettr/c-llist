@@ -10,7 +10,7 @@
 ** TODO poortool.c - make it accept UP, DOWN history commands
 ** TODO Fake throw ?
 * Issues
-** TODO [BUG] list_push_back on empty list causes seg fault
+** DONE [BUG] list_push_back on empty list causes seg fault
 ** TODO [BUG] list_delete_element for() loop assues we have elements
 ** TODO [BUG] list_remove if value is last, Tail is not updated correctly
 ** TODO [BUG] list_remove_if if value is last, Tail is not updated correctly
