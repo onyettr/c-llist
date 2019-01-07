@@ -1,4 +1,5 @@
 * c-list tasks
+** TODO add list_create (number, value)
 ** TODO Add sorting function
 ** TODO add iterators for the list
 ** TODO Add list swap(2 nodes)
