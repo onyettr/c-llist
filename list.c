@@ -127,7 +127,7 @@ list_t *list_create_fixed(int n) { /*@null@*/
    p = list_create();
    if ( p != NULL ) {
       for (i=0; i < n; i++) {
-       list_add_element(p, 0);
+	list_add_element(p, 0);
       }
    }
 

@@ -74,7 +74,7 @@ int test_create ( void ) {
   p2 = list_create_fixed(4);
   printf("\tTest01a - Create fixed size list (4) = %d\n", list_size(p2));    
 
-  p2 = list_create_fill(5, 202);
+  p3 = list_create_fill(5, 202);
   printf("\tTest01b - Create fixed size list (5) = %d\n", list_size(p3));    
   list_show(p3);
   
