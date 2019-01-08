@@ -62,6 +62,7 @@ Prototypes of all functions contained in this file (in order of occurance)
 int test_create ( void ) {
   list_t *p  = NULL;
   list_t *p2 = NULL;
+  list_t *p3 = NULL;  
   
   printf("**** Linked List Test - create Starts\n");  
 
@@ -69,12 +70,17 @@ int test_create ( void ) {
 
   printf("[%p] List created\n", (void*)p);
   list_show(p);
-
+  
   p2 = list_create_fixed(4);
   printf("\tTest01a - Create fixed size list (4) = %d\n", list_size(p2));    
 
+  p2 = list_create_fill(5, 202);
+  printf("\tTest01b - Create fixed size list (5) = %d\n", list_size(p3));    
+  list_show(p3);
+  
   list_clear(p);
   list_clear(p2);
+  list_clear(p3);
   
   printf("**** Linked List Test - create Ends\n");
   

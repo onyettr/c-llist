@@ -135,8 +135,36 @@ list_t *list_create_fixed(int n) { /*@null@*/
 }
 
 /**
+ *  @fn        list_t *list_create_fill(int n, int value)
+ *  @brief     Create a new list of n Elements and fill with value
+ *  @param[in] n  - number of elements to create
+ *  @param[in] value - fill pattern
+ *  @return    NULL is failure otherwise list_t pointer
+ *  @note      create a list of n (Elements) nodes are added and fill with value
+ */
+list_t *list_create_fill(int n, int value) {
+  list_t *p = (list_t*)NULL;
+  int i;
+#if defined(DEBUG_TRACE)
+  printf("list_create_fill: called, elements = %d, fill %d\n", n, value);
+#endif   
+
+   p = list_create();
+   if ( p != NULL ) {
+      for (i=0; i < n; i++) {
+	list_add_element(p, value);
+      }
+   }
+
+   return p; 
+}
+
+/**
  *  @fn     int list_assign(list_t *p, int n, int value)
  *  @brief  assign (fill) n elements to value
+ *  @param[in] p - Pointer to the list
+ *  @param[in] n - number to fill
+ *  @param[in] value - fill pattern
  *  @return SUCCESS or List empty, too small, too big
  *  @note   
  */
@@ -166,10 +194,10 @@ int list_assign(list_t *p, int n, int value) {
 
 /**
  * @fn        void list_add_element ( list_t *p, int value ) 
- * @brief     This adds a node to the end of the list
- * @param[in] *p         Pointer to the list to add to 
- * @param[in] value      Value of element
- * @return    = if ok, -1 is we have a malloc fail. 
+ * @brief     This adds a node to the end of the list 
+ * @param[in] p          Pointer to the list to add to 
+ * @param[in] value      Value (fill) of element
+ * @return    SUCCESS is ok, ERROR_LIST_ALLOCATION_FAILED
  */
 int list_add_element ( list_t *p, int value ) {
    node_t *pNode = NULL; 

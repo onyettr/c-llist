@@ -17,6 +17,13 @@
     fail_unless(lp != NULL, "list create fixed failed");
     fail_unless(list_size(lp) == 4, "list create fixed failed");       
 
+#test list_create_fill_positive
+    list_t *lp;
+    lp = list_create_fill(5,202);
+    fail_unless(lp != NULL, "list create fixed failed");
+    fail_unless(list_size(lp) == 5, "list create fill failed");       
+    fail_unless(list_get_back(lp) == 202, "list create fill failed");
+    
 #
 #tcase list_empty No elements
 #

@@ -93,6 +93,7 @@ Global variables
 
 list_t *list_create(void);                                  // Create a new list
 list_t *list_create_fixed(int n);                           // Create a new list of size n
+list_t *list_create_fill (int n, int value);                // Create a new list of size n, with fill of value
 int  list_assign      (list_t *p, int n, int value);        // Assign (fill) n elements to value
 int  list_add_element (list_t *p, int value);               // Add an element to the list, increases list size by 1
 int  list_push_front  (list_t *p, int value);               // Add an element to the front of the list, increase list size by 1
