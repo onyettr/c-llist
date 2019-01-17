@@ -27,5 +27,6 @@ int test_assign(void);
 int test_remove(void);
 int test_remove_if(void);
 int test_reverse(void);
+int test_swap(void);
 #endif
 

@@ -454,8 +454,30 @@ bool is_odd (int value) {
   fail_unless(list_size(rmTest6) == 3, "remove numerous element size");  
   fail_unless(list_get_front(rmTest6) == 100, "remove numerous get element");
 
+# test list_swap_negative_not_created
+  list_t *SwapTest  = NULL;
+  list_t *SwapTest1 = NULL;
 
+  fail_unless(list_swap(SwapTest,SwapTest1) == ERROR_LIST_EMPTY, "swap with empty lists");
 
+# test list_swap_negative_not_same_size
+  list_t *SwapTest  = NULL;
+  list_t *SwapTest1 = NULL;
 
+  SwapTest = list_create_fill(3, 100);
+  SwapTest1= list_create_fill(5, 200);
+
+  fail_unless(list_swap(SwapTest,SwapTest1) == ERROR_LIST_SIZE_MISMATCH, "swap with unequal lists");
+
+# test list_swap_positive__list_swap
+  list_t *SwapTest  = NULL;
+  list_t *SwapTest1 = NULL;
+
+  SwapTest = list_create_fill(3, 100);
+  SwapTest1= list_create_fill(3, 200);
+
+  fail_unless(list_swap(SwapTest,SwapTest1) == SUCCESS, "swap with unequal lists");
+  fail_unless(list_get_position(SwapTest,1) == 200, "swap lists should have 200");
+  fail_unless(list_get_position(SwapTest1,1)== 100, "swap lists should have 100");
 
   

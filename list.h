@@ -84,6 +84,7 @@ Private Macros
 #define ERROR_LIST_BAD_POSITION         -12
 #define ERROR_LIST_TOO_SMALL            -13
 #define ERROR_LIST_TOO_BIG              -14
+#define ERROR_LIST_SIZE_MISMATCH        -15
 
 /*
 ******************************************************************************
@@ -114,6 +115,7 @@ int  list_clear       (list_t *p);                          // Remove all list e
 int  list_search      (list_t *p, int value);               // Search list for value
 int  list_remove      (list_t *p, int value);               // Remove elements of 'value' from list
 int  list_remove_if   (list_t *p, bool (*predFunc)(int value)); // Remove elements if predFunc is true from list
+int  list_swap        (list_t *p, list_t *p1);              // Swap p with p1
 node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
 node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
 

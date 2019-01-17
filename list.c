@@ -327,7 +327,10 @@ int list_add_position( list_t *p, int position, int value ) {
    node_t *pCurrent;
    node_t *pPrevious;   
    int i;
-
+#if defined(DEEP_TRACE)
+   printf("list_add_position: %p %d = %d\n", (void *)p, position, value);
+#endif
+   
    if ( position > list_size(p)) {
      printf("list_add_position: position is beyond end of the list\n");
 
@@ -359,7 +362,9 @@ int list_add_position( list_t *p, int position, int value ) {
    /* Now we are at Position, lets insert the new node */
    pPrevious->pNext = pTemp;
    pTemp->pNext     = pCurrent;
-  
+#if defined (DEEP_TRACE)
+   printf("list_add_position: [%p]\n", pCurrent);
+#endif   
    p->NodeCount++;                 /* Increase the number of nodes                   */
 
    return SUCCESS;
@@ -378,7 +383,7 @@ int  list_get_position(list_t *p, int position) {
   int i;
 
 #if defined(DEEP_TRACE)
-  printf("list_get_position: %d\n", position);
+  printf("list_get_position: %p %d\n", (void*)p,position);
 #endif
   
   if (list_empty(p)) {
@@ -404,7 +409,7 @@ int  list_get_position(list_t *p, int position) {
   value = pCurrent->value;
 
 #if defined(DEEP_TRACE)  
-  printf("list_get_position: %d returns %d\n", position, value);
+  printf("list_get_position: [%p] %d returns %d\n", (void*)pCurrent, position, value);
 #endif  
 
   return value;
@@ -484,8 +489,11 @@ bool list_empty (list_t *p) {
 #if defined (DEBUG_TRACE)
    printf("TRACE: list_empty called\n");
 #endif
-     
-   if (isEmpty(p) && (p != NULL)) {
+
+   if (p == NULL) {
+      return true;
+   }
+   if (isEmpty(p)) {
       return true;
    }
 
@@ -796,7 +804,7 @@ int list_remove_if (list_t *p, bool (*predFunc)(int value)) {
     node_t *pCurrent;
 
 #if defined(DEEP_TRACE)
-    printf("list_remove: Value %d\n", value);
+    printf("list_remove_if: \n");
 #endif
     
     /*
@@ -829,6 +837,49 @@ int list_remove_if (list_t *p, bool (*predFunc)(int value)) {
     }
 
     return SUCCESS;
+}
+
+/**
+ * @fn        int list_swap(list_t *p, list_t *p1)
+ * @brief     Swap p1 for p
+ * @param[in] p     - the first list
+ * @param[in] p1    - the second list
+ * @return    SUCCESS if ok, ERROR_LIST_SIZE_MISMATCH if list sizes are not equal
+ * @note
+ */
+int list_swap(list_t *p, list_t *p1) {
+   node_t *pCurrentListOne;
+   node_t *pCurrentListTwo;   
+#if defined(DEEP_TRACE)
+   printf("list_swap: %p %p\n", (void *)p, (void *)p1);
+#endif
+    
+    /*
+     * Lists are empty?
+     */
+    if (list_size(p) == 0 ||
+	list_size(p1)== 0) {
+       return ERROR_LIST_EMPTY;
+    }
+
+    if (list_size(p) != list_size(p1)) {
+       return ERROR_LIST_SIZE_MISMATCH;
+    }
+
+    pCurrentListOne = GetListHead(p);
+    pCurrentListTwo = GetListHead(p1);
+    while (pCurrentListOne) {
+      int tmp;
+
+      tmp = pCurrentListOne->value;
+      pCurrentListOne->value = pCurrentListTwo->value;
+      pCurrentListTwo->value = tmp;
+
+      pCurrentListOne = pCurrentListOne->pNext;
+      pCurrentListTwo = pCurrentListTwo->pNext;      
+    }
+    
+    return SUCCESS;  
 }
 
 /**
