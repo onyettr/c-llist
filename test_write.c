@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list write operations
+ * @file test_write.c
  */
 
 /*
@@ -13,8 +10,7 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "poortool.h"
+#include "list.h"
 
 /*
 ******************************************************************************
@@ -51,11 +47,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,28 +54,42 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
-#if 0  
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-  (void)test_front();
-  (void)test_back();
-  (void)test_add();
-  (void)test_delete();
-  (void)test_search();
-  (void)test_reverse();
-  (void)test_assign();
-  (void)test_remove();
-  (void)test_remove_if();  
-  (void)test_clear();
-  (void)test_swap();  
-#endif
-  //  (void)test_sort();
-  (void)test_write();
-#if 0 
-   poortool_init();
-#endif
+int test_write ( void )
+{
+  list_t *writeTest;
   
-   return 0;
+  // Sign on
+  printf("**** Linked List Test - write\n");
+
+  /*
+   * create a new list
+   */ 
+  writeTest = list_create();
+
+  printf("\tTest01a - write single element, empty list\n");
+  printf("Result %d = ERROR_LIST_EMPTY\n", list_write_position(writeTest, 3, 101));
+  
+  printf("\tTest01b - write single element, bad position\n");
+  list_add_element(writeTest,10);
+  list_show(writeTest);
+  printf("Result %d = ERROR_LIST_BAD_POSITON\n", list_write_position(writeTest, 3, 101));
+
+  printf("\tTest02a  - write single element, good positon\n");
+  list_add_element(writeTest,20);
+  list_show(writeTest);  	 
+  printf("Result %d = SUCCESS\n", list_write_position(writeTest, 1, 101));
+  list_show(writeTest);  	 	 
+
+  printf("\tTest02b  - write single element, good position,longer list\n");
+  list_add_element(writeTest,201);
+  list_add_element(writeTest,202);
+  list_add_element(writeTest,203);  
+  list_show(writeTest);  	 
+  printf("Result %d = SUCCESS\n", list_write_position(writeTest, 3, 1001));
+  list_show(writeTest);  	 	 
+  
+  printf("**** Linked List Test - add Ends\n");
+  
+  return 0;
 }
+

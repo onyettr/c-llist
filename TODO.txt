@@ -1,5 +1,9 @@
 * c-list tasks
 ** TODO Add sorting function
+** TODO Add list_write_position() to add element without size increasing
+** TODO check.ts doesnt have add_position tests?
+** TODO check.ts needs list_write_position test
+** TODO check.ts needs list_sort test
 ** TODO add iterators for the list
 ** TODO Add sbrk() and ensure all allocated memory is put back
 ** TODO take differing types?

@@ -52,9 +52,11 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/test_empty.o       \
 		       $(OBJECT_DIR)/test_front.o      	\
 		       $(OBJECT_DIR)/test_clear.o       \
+		       $(OBJECT_DIR)/test_write.o       \
 		       $(OBJECT_DIR)/test_back.o      	\
 		       $(OBJECT_DIR)/test_size.o       	\
 		       $(OBJECT_DIR)/test_swap.o       	\
+		       $(OBJECT_DIR)/test_sort.o       	\
 		       $(OBJECT_DIR)/test_add.o       	\
 		       $(OBJECT_DIR)/test_del.o       	\
 		       $(OBJECT_DIR)/trap.o		\
@@ -129,6 +131,9 @@ $(OBJECT_DIR)/test_empty.o:	test_empty.c $(TEST_HDRS)
 $(OBJECT_DIR)/test_front.o:	test_front.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_front.c -o $(OBJECT_DIR)/test_front.o
 
+$(OBJECT_DIR)/test_write.o:	test_write.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_write.c -o $(OBJECT_DIR)/test_write.o
+
 $(OBJECT_DIR)/test_back.o:	test_back.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_back.c -o $(OBJECT_DIR)/test_back.o
 
@@ -140,6 +145,9 @@ $(OBJECT_DIR)/test_size.o:	test_size.c $(TEST_HDRS)
 
 $(OBJECT_DIR)/test_swap.o:	test_swap.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_swap.c -o $(OBJECT_DIR)/test_swap.o
+
+$(OBJECT_DIR)/test_sort.o:	test_sort.c $(TEST_HDRS)
+	$(CC) $(CFLAGS) $(DEBUG) test_sort.c -o $(OBJECT_DIR)/test_sort.o
 
 $(OBJECT_DIR)/test_add.o:	test_add.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_add.c -o $(OBJECT_DIR)/test_add.o
@@ -194,10 +202,12 @@ clean:
 	rm -f $(OBJECT_DIR)/test_remove.o
 	rm -f $(OBJECT_DIR)/test_remove_if.o
 	rm -f $(OBJECT_DIR)/test_empty.o
+	rm -f $(OBJECT_DIR)/test_write.o
 	rm -f $(OBJECT_DIR)/test_clear.o
 	rm -f $(OBJECT_DIR)/test_front.o
 	rm -f $(OBJECT_DIR)/test_size.o
 	rm -f $(OBJECT_DIR)/test_swap.o
+	rm -f $(OBJECT_DIR)/test_sort.o
 	rm -f $(OBJECT_DIR)/test_back.o
 	rm -f $(OBJECT_DIR)/test_add.o
 	rm -f $(OBJECT_DIR)/test_del.o

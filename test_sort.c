@@ -1,9 +1,6 @@
 /**
- *****************************************************************************
- * @file   main.c
- * @brief  test harness calling
- * @author ronyett
- ***************************************************************************** 
+ * @brief Test harness for single linked list sort operations
+ * @file test_sort.c
  */
 
 /*
@@ -13,8 +10,7 @@ Includes
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "poortool.h"
+#include "list.h"
 
 /*
 ******************************************************************************
@@ -51,11 +47,6 @@ Global variables
 Exported Global variables
 ******************************************************************************
 */
-extern void poortool_init();
-
-/*
- * Adds a node onto the head of list at the front.
- */
 
 /*
 ******************************************************************************
@@ -63,28 +54,31 @@ Prototypes of all functions contained in this file (in order of occurance)
 ******************************************************************************
 */
 
-int main ( void ) {
-#if 0  
-  (void)test_create();
-  (void)test_empty();
-  (void)test_size();
-  (void)test_front();
-  (void)test_back();
-  (void)test_add();
-  (void)test_delete();
-  (void)test_search();
-  (void)test_reverse();
-  (void)test_assign();
-  (void)test_remove();
-  (void)test_remove_if();  
-  (void)test_clear();
-  (void)test_swap();  
-#endif
-  //  (void)test_sort();
-  (void)test_write();
-#if 0 
-   poortool_init();
-#endif
+int test_sort ( void )
+{
+  list_t *sortTest;
   
-   return 0;
+  // Sign on
+  printf("**** Linked List Test - sort\n");
+
+  /*
+   * create a new list
+   */ 
+  sortTest = list_create();  
+
+  list_add_element(sortTest, 999);
+  list_add_element(sortTest, 201);
+  list_add_element(sortTest, 31);
+  list_add_element(sortTest, 4000);  
+  list_show(sortTest);
+
+  printf("\tTest01 - size of list 4 = %d\n", list_size(sortTest));
+
+  list_sort(sortTest);
+  list_show(sortTest);
+  
+  printf("**** Linked List Test - sort Ends\n");
+  
+  return 0;
 }
+

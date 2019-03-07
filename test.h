@@ -16,6 +16,7 @@ Includes
 
 int test_create();
 int test_empty();
+int test_write();
 int test_size();
 int test_add  (void);
 int test_front(void);
@@ -28,5 +29,6 @@ int test_remove(void);
 int test_remove_if(void);
 int test_reverse(void);
 int test_swap(void);
+int test_sort(void);
 #endif
 

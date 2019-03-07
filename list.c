@@ -371,6 +371,54 @@ int list_add_position( list_t *p, int position, int value ) {
 }
 
 /**
+ * @fn        void list_write_position( list_t *p, int position, int value)
+ * @brief     Adds a node to a list at 'Position'
+ * @param[in] *p       - Pointer to the list
+ * @param[in] position - place to add
+ * @param[in] value    - to add
+ * @return    none
+ * @note      Does not create a new node, assumes list is already created. List Size remains the same
+ */
+int  list_write_position(list_t *p, int position, int value) {
+   node_t *pTemp = NULL; 
+   node_t *pCurrent;
+   node_t *pPrevious;   
+   int i;
+#if defined(DEEP_TRACE)
+   printf("list_write_position: %p %d = %d\n", (void *)p, position, value);
+#endif
+   if (list_empty(p)) {
+     printf("list_get_position - list is empty");
+
+     return ERROR_LIST_EMPTY;
+   }
+   
+   if ( position > list_size(p)) {
+     printf("list_write_position: position is beyond end of the list\n");
+
+     return ERROR_LIST_BAD_POSITION;
+   }
+
+   pCurrent = GetListHead(p);  /* Start of the list */
+   
+   /*
+    * Traverse the list until we get to position
+    */
+   for (i=0; i < position; i++) {
+      pPrevious = pCurrent;
+      pCurrent = pCurrent->pNext;
+   }
+
+   /* Now we are at Position, lets insert the new node */
+   pPrevious->value = value;
+#if defined (DEEP_TRACE)
+   printf("list_write_position: [%p] = %d\n", pPrevious,value);
+#endif   
+
+   return SUCCESS;
+}
+
+/**
  * @fn        int  list_get_position(list_t *p, int position) 
  * @brief     Return an element value given a position in the list
  * @param[in] *p   - Pointer to the list
@@ -883,6 +931,46 @@ int list_swap(list_t *p, list_t *p1) {
 }
 
 /**
+ * @fn        int  list_sort        (list_t *p)
+ * @brief     Sort list p
+ * @param[in] p     - list
+ * @return    SUCCESS if ok, ERROR_LIST_SIZE_MISMATCH if list sizes are not equal
+ * @note
+ */
+int  list_sort        (list_t *p) {
+  int minimum;
+  int temp;  
+  int temp1;
+  int temp2;
+  int i;
+  int n;
+
+  printf("list_sort size %d\n", list_size(p));
+  n = list_size(p);
+  
+  for (i=0; i < n; i++) {
+    int j;
+    minimum = i;
+    for (j=(i+1); j < n; j++) {
+      temp1 = list_get_position(p, minimum);
+      temp2 = list_get_position(p, j);
+      printf("i %d j %d temp1 %d temp2 %d\n", i, j, temp1, temp2);
+      if (temp1 > temp2) {
+	minimum = j;
+      }
+    }
+    temp = list_get_position(p, minimum);
+    temp1= list_get_position(p, i);
+
+    list_add_position(p,minimum,temp1);
+    list_add_position(p,i,temp);
+    printf("SWAP i %d minimum %d temp1 %d temp2 %d\n", i, minimum, temp, temp1);    
+  }
+  
+  return SUCCESS;  
+}
+
+/**
  * @fn     void list_show ( list_t *p )
  * @brief  Display items in the list
  * @param  *p - pointer to list
@@ -890,6 +978,7 @@ int list_swap(list_t *p, list_t *p1) {
  */
 void list_show ( list_t *p ) {
   node_t *pCurrent = NULL;
+  int NumberOfNodes = 0;
   
   if (!list_empty(p)) {
     int Count = 0;
@@ -898,9 +987,11 @@ void list_show ( list_t *p ) {
 	   p->NodeCount,
 	   (void *)p->pHead,
 	   (void *)p->pTail);
-  
+
+    NumberOfNodes = list_size(p);
+    
     pCurrent = GetListHead(p);
-    while (pCurrent) {
+    while ((pCurrent) && (NumberOfNodes > 0)) {
        printf("%2d [%p]\t%5d\t[%p]",
 	      Count,
 	      (void *)pCurrent,
@@ -919,6 +1010,7 @@ void list_show ( list_t *p ) {
        
        pCurrent = pCurrent->pNext;
        Count++;
+       NumberOfNodes--;
     }
   } else {
     printf("\t#Nodes [%d] pHead [%p] pTail [%p]\n",

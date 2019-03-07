@@ -100,6 +100,7 @@ int  list_add_element (list_t *p, int value);               // Add an element to
 int  list_push_front  (list_t *p, int value);               // Add an element to the front of the list, increase list size by 1
 int  list_push_back   (list_t *p, int value);               // Add an element to the back  of the list, increase list size by 1
 int  list_add_position(list_t *p, int position, int value); // Add an element at position, increase list size by 1
+int  list_write_position(list_t *p, int position, int value); // Add an element at position,do not increase list size
 int  list_reverse     (list_t *p);                          // Reverse the contents of the list
 void list_show        (list_t *p);                          // Show the contents of the linked list
 int  list_get_position(list_t *p, int position);            // return value at "position"
@@ -108,7 +109,6 @@ int  list_get_back    (list_t *p);                          // return value of t
 int  list_delete_element(list_t *p, int position);          // Delete element  at position, decreases list size by 1
 int  list_delete_front(list_t *p);                          // Delete element at the Front
 int  list_delete_back (list_t *p);                          // Delete element at the Back
-void list_sort        (list_t *p);                          // Sort the list
 int  list_size        (list_t *p);                          // Number of elements in the list
 bool list_empty       (list_t *p);                          // is the list empty?
 int  list_clear       (list_t *p);                          // Remove all list elements 
@@ -116,6 +116,7 @@ int  list_search      (list_t *p, int value);               // Search list for v
 int  list_remove      (list_t *p, int value);               // Remove elements of 'value' from list
 int  list_remove_if   (list_t *p, bool (*predFunc)(int value)); // Remove elements if predFunc is true from list
 int  list_swap        (list_t *p, list_t *p1);              // Swap p with p1
+int  list_sort        (list_t *p);                          // Sort list p
 node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
 node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
 
