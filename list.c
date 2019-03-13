@@ -220,7 +220,7 @@ int list_add_element ( list_t *p, int value ) {
        p->pTail = pNode;
        pNode->pNext = NULL;
 #if defined (DEEP_TRACE)       
-       printf("list_add: (first) node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+       printf("list_add: (first) node [%p] pHead [%p] pTail[%p] Value %d\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail, value);
 #endif       
    } else {
        /*
@@ -229,7 +229,7 @@ int list_add_element ( list_t *p, int value ) {
        p->pTail->pNext = pNode;  
        p->pTail = pNode;
 #if defined (DEEP_TRACE)       
-       printf("list_add: node [%p] pHead [%p] pTail[%p]\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail);
+       printf("list_add: node [%p] pHead [%p] pTail[%p] value %d\n", (void*)pNode, (void*)p->pHead, (void*)p->pTail, value);
 #endif       
    }
 
@@ -315,7 +315,7 @@ int list_push_back ( list_t *p, int value ) {
 }
 
 /**
- * @fn        void list_add_position( list_t *p, int position, int value)
+ * @fn        int list_add_position( list_t *p, int position, int value)
  * @brief     Adds a node to a list at 'Position'
  * @param[in] *p       - Pointer to the list
  * @param[in] position - place to add
@@ -363,7 +363,7 @@ int list_add_position( list_t *p, int position, int value ) {
    pPrevious->pNext = pTemp;
    pTemp->pNext     = pCurrent;
 #if defined (DEEP_TRACE)
-   printf("list_add_position: [%p]\n", pCurrent);
+   printf("list_add_position: [%p]\n", (void *)pCurrent);
 #endif   
    p->NodeCount++;                 /* Increase the number of nodes                   */
 
@@ -380,7 +380,6 @@ int list_add_position( list_t *p, int position, int value ) {
  * @note      Does not create a new node, assumes list is already created. List Size remains the same
  */
 int  list_write_position(list_t *p, int position, int value) {
-   node_t *pTemp = NULL; 
    node_t *pCurrent;
    node_t *pPrevious;   
    int i;
@@ -388,7 +387,7 @@ int  list_write_position(list_t *p, int position, int value) {
    printf("list_write_position: %p %d = %d\n", (void *)p, position, value);
 #endif
    if (list_empty(p)) {
-     printf("list_get_position - list is empty");
+     printf("list_write_position - list is empty");
 
      return ERROR_LIST_EMPTY;
    }
@@ -400,19 +399,21 @@ int  list_write_position(list_t *p, int position, int value) {
    }
 
    pCurrent = GetListHead(p);  /* Start of the list */
+   pPrevious = pCurrent;
    
    /*
     * Traverse the list until we get to position
     */
    for (i=0; i < position; i++) {
-      pPrevious = pCurrent;
-      pCurrent = pCurrent->pNext;
+     //     pPrevious = pCurrent;
+     pCurrent = pCurrent->pNext;
+     //      printf("write %d = %d prev %p curr %p\n", position,value, (void*)pPrevious, (void*)pCurrent);
    }
 
-   /* Now we are at Position, lets insert the new node */
-   pPrevious->value = value;
+   /* Now we are at Position, lets update the node */
+   pCurrent->value = value;
 #if defined (DEEP_TRACE)
-   printf("list_write_position: [%p] = %d\n", pPrevious,value);
+   printf("list_write_position: %d [%p] = %d\n", position, (void*)pPrevious,value);
 #endif   
 
    return SUCCESS;
@@ -933,40 +934,40 @@ int list_swap(list_t *p, list_t *p1) {
 /**
  * @fn        int  list_sort        (list_t *p)
  * @brief     Sort list p
- * @param[in] p     - list
- * @return    SUCCESS if ok, ERROR_LIST_SIZE_MISMATCH if list sizes are not equal
+ * @param[in] *p     - list
+ * @return    SUCCESS if ok, ERROR_LIST_EMPTY is nothing there
  * @note
  */
 int  list_sort        (list_t *p) {
-  int minimum;
+  int key;
   int temp;  
-  int temp1;
-  int temp2;
-  int i;
+  int i, j;
   int n;
+#if defined(DEEP_TRACE)  
+  printf("list_sort: %p size %d\n", (void*)p, list_size(p));
+#endif
 
-  printf("list_sort size %d\n", list_size(p));
-  n = list_size(p);
-  
-  for (i=0; i < n; i++) {
-    int j;
-    minimum = i;
-    for (j=(i+1); j < n; j++) {
-      temp1 = list_get_position(p, minimum);
-      temp2 = list_get_position(p, j);
-      printf("i %d j %d temp1 %d temp2 %d\n", i, j, temp1, temp2);
-      if (temp1 > temp2) {
-	minimum = j;
-      }
-    }
-    temp = list_get_position(p, minimum);
-    temp1= list_get_position(p, i);
-
-    list_add_position(p,minimum,temp1);
-    list_add_position(p,i,temp);
-    printf("SWAP i %d minimum %d temp1 %d temp2 %d\n", i, minimum, temp, temp1);    
+  /*
+   * Lists are empty?
+   */
+  if (list_size(p) == 0) {
+    return ERROR_LIST_EMPTY;
   }
   
+  n = list_size(p);
+  for (i=1; i < n; i++) {
+    key = list_get_position(p, i);
+    j = i-1;
+
+    temp = list_get_position(p, j);
+    while (j >= 0 && temp > key) {
+      list_write_position(p,j+1,temp);
+      j = j-1;
+      temp = list_get_position(p, j);
+    }
+    list_write_position(p,j+1, key);
+  }
+
   return SUCCESS;  
 }
 

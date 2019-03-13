@@ -78,10 +78,10 @@ int main ( void ) {
   (void)test_remove();
   (void)test_remove_if();  
   (void)test_clear();
-  (void)test_swap();  
+  (void)test_swap();
+  (void)test_write();  
 #endif
-  //  (void)test_sort();
-  (void)test_write();
+  (void)test_sort();  
 #if 0 
    poortool_init();
 #endif

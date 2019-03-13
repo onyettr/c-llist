@@ -480,4 +480,35 @@ bool is_odd (int value) {
   fail_unless(list_get_position(SwapTest,1) == 200, "swap lists should have 200");
   fail_unless(list_get_position(SwapTest1,1)== 100, "swap lists should have 100");
 
-  
+#
+#tcase list_sort
+#
+# test list_sort_empty_list
+  list_t *SortTest  = NULL;
+
+  SortTest = list_create();
+  fail_unless(list_empty(SortTest) == 1, "list empty TRUE");
+
+# test list_sort_one_element
+  list_t *SortTest  = NULL;
+
+  SortTest = list_create();
+  list_add_element(SortTest, 60000);    
+
+  list_sort(SortTest);
+  fail_unless(list_get_position(SortTest,0) == 60000, "list sort fail");
+
+# test list_sort_many_elements
+  list_t *SortTest  = NULL;
+
+  SortTest = list_create();
+  list_add_element(SortTest, 60000);    
+  list_add_element(SortTest, 120);
+  list_add_element(SortTest, 111);
+  list_add_element(SortTest, 11);  
+  list_add_element(SortTest, 12);
+  list_add_element(SortTest, 6);  
+
+  list_sort(SortTest);
+  fail_unless(list_get_position(SortTest,0) == 6, "list sort fail");
+    
