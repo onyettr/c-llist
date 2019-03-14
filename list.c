@@ -381,11 +381,12 @@ int list_add_position( list_t *p, int position, int value ) {
  */
 int  list_write_position(list_t *p, int position, int value) {
    node_t *pCurrent;
-   node_t *pPrevious;   
    int i;
+
 #if defined(DEEP_TRACE)
    printf("list_write_position: %p %d = %d\n", (void *)p, position, value);
 #endif
+
    if (list_empty(p)) {
      printf("list_write_position - list is empty");
 
@@ -397,23 +398,19 @@ int  list_write_position(list_t *p, int position, int value) {
 
      return ERROR_LIST_BAD_POSITION;
    }
-
-   pCurrent = GetListHead(p);  /* Start of the list */
-   pPrevious = pCurrent;
    
    /*
     * Traverse the list until we get to position
     */
+   pCurrent = GetListHead(p);  /* Start of the list */   
    for (i=0; i < position; i++) {
-     //     pPrevious = pCurrent;
      pCurrent = pCurrent->pNext;
-     //      printf("write %d = %d prev %p curr %p\n", position,value, (void*)pPrevious, (void*)pCurrent);
    }
 
    /* Now we are at Position, lets update the node */
    pCurrent->value = value;
 #if defined (DEEP_TRACE)
-   printf("list_write_position: %d [%p] = %d\n", position, (void*)pPrevious,value);
+   printf("list_write_position: %d [%p] = %d\n", position, (void*)pCurrent,value);
 #endif   
 
    return SUCCESS;
