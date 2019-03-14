@@ -57,6 +57,7 @@ Prototypes of all functions contained in this file (in order of occurance)
 int test_sort ( void )
 {
   list_t *sortTest;
+  int ErrCode = SUCCESS;
   
   // Sign on
   printf("**** Linked List Test - sort\n");
@@ -69,7 +70,11 @@ int test_sort ( void )
   /*
    * Test01:Sort empty list
    */
-  printf("\tTest01  - size of list 0 = %d, Res = %d\n", list_size(sortTest), list_sort(sortTest));
+  ErrCode = list_sort(sortTest);
+  printf("\tTest01  - size of list 0 = %d, Res = %s\n", list_size(sortTest), list_error_to_string(ErrCode));
+  if (ErrCode != ERROR_LIST_EMPTY) {
+    exit(-1);
+  }
   
   /*
    * Test02:Sort one element
