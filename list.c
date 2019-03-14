@@ -14,6 +14,7 @@ Includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include "list.h"
 #include "trap.h"
 
@@ -84,6 +85,36 @@ node_t *GetListTail   (list_t *p) {
    }
 
    return p->pTail;
+}
+
+
+/**
+ *  @fn        char *list_error_to_string(int ErrorCode)
+ *  @brief     Given an error code, convert to a string
+ *  @param[in] ErrorCode
+ *  @return    Error string
+ *  @note      
+ */
+char *list_error_to_string(int ErrorCode) {
+  static char *Errors[] =
+  {
+   "SUCCESS",                       /*  0 */
+    "ERROR_LIST_EMPTY",             /* -1 */
+    "ERROR_LIST_ALLOCATION_FAILED", /* -2 */
+    "ERROR_LIST_BAD_POSITION",      /* -3 */
+    "ERROR_LIST_TOO_SMALL",         /* -4 */
+    "ERROR_LIST_TOO_BIG",           /* -5 */
+    "ERROR_LIST_SIZE_MISMATCH"      /* -6 */
+  };
+  int32_t Positive;
+
+  Positive = abs(ErrorCode);
+
+  if (Positive > abs(ERROR_LIST_SIZE_MISMATCH)) {
+    return "ERROR_LIST_UNKNOWN_ERROR";
+  }
+
+  return (Errors[Positive]);
 }
 
 /**
@@ -465,12 +496,12 @@ int  list_get_position(list_t *p, int position) {
  * @fn        int  list_get_front   (list_t *p)
  * @brief     Return the value at the front of the list
  * @param[in] *p   - Pointer to the list
- * @return    Value at Front or -1 if empty
+ * @return    Value at Front or ERROR_LIST_EMPTY if empty
  */
 int  list_get_front   (list_t *p) {
   int value = SUCCESS;
 #if (DEBUG_TRACE)
-  printf("TRACE: list_get_front called\n");
+  printf("list_get_front: %d called\n",(void*)p);
 #endif  
 
   if (!list_empty(p)) {

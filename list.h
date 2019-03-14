@@ -78,13 +78,14 @@ typedef struct list {
 Private Macros
 ******************************************************************************
 */
-#define SUCCESS                           0
-#define ERROR_LIST_EMPTY                -10
-#define ERROR_LIST_ALLOCATION_FAILED    -11
-#define ERROR_LIST_BAD_POSITION         -12
-#define ERROR_LIST_TOO_SMALL            -13
-#define ERROR_LIST_TOO_BIG              -14
-#define ERROR_LIST_SIZE_MISMATCH        -15
+#define SUCCESS                          0
+#define ERROR_LIST_EMPTY                -1
+#define ERROR_LIST_ALLOCATION_FAILED    -2
+#define ERROR_LIST_BAD_POSITION         -3
+#define ERROR_LIST_TOO_SMALL            -4
+#define ERROR_LIST_TOO_BIG              -5
+#define ERROR_LIST_SIZE_MISMATCH        -6
+#define ERROR_LIST_UNKNOWN_ERROR        -7
 
 /*
 ******************************************************************************
@@ -119,6 +120,6 @@ int  list_swap        (list_t *p, list_t *p1);              // Swap p with p1
 int  list_sort        (list_t *p);                          // Sort list p
 node_t *GetListHead   (list_t *p);                          // Obtain Head iterator pointing to first element
 node_t *GetListTail   (list_t *p);                          // Obtain Tail iterator pointing to last element
-
+char *list_error_to_string(int ErrorCode);                  // Return string from Error code
 #endif /* __LIST_H__ */
 
