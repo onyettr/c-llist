@@ -1,6 +1,5 @@
 * c-list tasks
-** TODO Add sorting function
-** TODO Add list_write_position() to add element without size increasing
+** TODO All unity tests are not present
 ** TODO check.ts doesnt have add_position tests?
 ** TODO check.ts needs list_write_position test
 ** TODO check.ts needs list_sort test
@@ -18,6 +17,9 @@
 ** TODO [BUG] list_remove if value is last, Tail is not updated correctly
 ** TODO [BUG] list_remove_if if value is last, Tail is not updated correctly
 * Completed
+** DONE Add list_write_position() to add element without size increasing
+** DONE Add UNITY test facility
+** DONE Add sorting function
 ** DONE Add list swap(2 nodes)
 ** DONE add list_create (number, value)
 ** DONE list_pop_back to add

@@ -59,7 +59,7 @@ OBJS  		     = $(OBJECT_DIR)/main.o 		\
 		       $(OBJECT_DIR)/test_sort.o       	\
 		       $(OBJECT_DIR)/test_add.o       	\
 		       $(OBJECT_DIR)/test_del.o       	\
-		       $(OBJECT_DIR)/trap.o		\
+		       $(OBJECT_DIR)/trap.o		
 #		       $(OBJECT_DIR)/poortool.o 
 
 STACK_OBJ	     = $(OBJECT_DIR)/stack.o
@@ -78,7 +78,7 @@ TEST_STACK 	     = list_test.ts
 # clean		Delete object and library files
 #*******************************************************************************
 
-all:	$(OBJECT_DIR) list.exe liblist.a test_harness stack.exe
+all:	$(OBJECT_DIR) list.exe liblist.a test_harness unity_test_harness stack.exe 
 
 # The old order of linking chestnut had me going here! Objs need to be first in the list with library last
 list.exe:	$(OBJS) $(LIBS)
@@ -107,9 +107,6 @@ $(OBJECT_DIR)/trap.o:		trap.c
 $(OBJECT_DIR)/test_reverse.o:	test_reverse.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_reverse.c -o $(OBJECT_DIR)/test_reverse.o
 
-$(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
-	$(CC) $(CFLAGS) $(DEBUG) test_search.c -o $(OBJECT_DIR)/test_search.o
-
 $(OBJECT_DIR)/test_assign.o:	test_assign.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_assign.c -o $(OBJECT_DIR)/test_assign.o
 
@@ -122,7 +119,7 @@ $(OBJECT_DIR)/test_remove_if.o:	test_remove_if.c $(TEST_HDRS)
 $(OBJECT_DIR)/test_create.o:	test_create.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_create.c -o $(OBJECT_DIR)/test_create.o
 
-(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
+$(OBJECT_DIR)/test_search.o:	test_search.c $(TEST_HDRS)
 	$(CC) $(CFLAGS) $(DEBUG) test_search.c -o $(OBJECT_DIR)/test_search.o
 
 $(OBJECT_DIR)/test_empty.o:	test_empty.c $(TEST_HDRS)
@@ -162,6 +159,18 @@ $(OBJECT_DIR)/stack.o:		stack.c
 	$(CC) $(CFLAGS) $(DEBUG) stack.c -o $(OBJECT_DIR)/stack.o
 
 #
+# Unity test harness
+#
+unity_test_harness: unitytest.exe
+
+unitytest.exe:	liblist.a $(OBJECT_DIR)/unity.o $(OBJECT_DIR)/unitytest.o
+	$(CC) -o unitytest.exe $(OBJECT_DIR)/unity.o $(OBJECT_DIR)/unitytest.o -static -L. -llist
+$(OBJECT_DIR)/unity.o:	unity/unity.c
+	$(CC) $(CFLAGS) -I unity/ unity/unity.c -o $(OBJECT_DIR)/unity.o
+$(OBJECT_DIR)/unitytest.o:	unitytest.c
+	$(CC) $(CFLAGS) -I unity/ unitytest.c -o $(OBJECT_DIR)/unitytest.o
+
+#
 # This is the "check" target: Test harness is in stack_check.ts file and 
 # this is converted by "check" into a C file which is linked to give another
 # executable. 
@@ -190,6 +199,7 @@ clean:
 	rm -f list.exe
 	rm -f stack.exe
 	rm -f list_check.exe
+	rm -f unitytest.exe
 	rm -f liblist.a
 	rm -f $(OBJECT_DIR)/main.o
 	rm -f $(OBJECT_DIR)/trap.o
@@ -212,6 +222,8 @@ clean:
 	rm -f $(OBJECT_DIR)/test_add.o
 	rm -f $(OBJECT_DIR)/test_del.o
 	rm -f $(OBJECT_DIR)/stack.o
+	rm -f $(OBJECT_DIR)/unity.o
+	rm -f $(OBJECT_DIR)/unitytest.o
 	rm -f *.gcno
 	rm -f *.gcda
 	rm -f core
